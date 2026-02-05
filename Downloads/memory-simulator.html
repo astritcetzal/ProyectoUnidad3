@@ -1,0 +1,923 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulador de Algoritmos Best Fit vs Worst Fit</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            opacity: 0.9;
+            font-size: 1.1em;
+        }
+
+        .content {
+            padding: 30px;
+        }
+
+        .controls {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+
+        .control-section {
+            margin-bottom: 25px;
+        }
+
+        .control-section h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+
+        .input-group {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            align-items: end;
+        }
+
+        .input-field {
+            flex: 1;
+            min-width: 150px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #555;
+            font-weight: 500;
+        }
+
+        input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 1em;
+            transition: border-color 0.3s;
+        }
+
+        input[type="number"]:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        button {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+        }
+
+        .btn-primary {
+            background: #667eea;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #5568d3;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #5a6268;
+        }
+
+        .btn-success {
+            background: #28a745;
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #218838;
+        }
+
+        .btn-danger {
+            background: #dc3545;
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #c82333;
+        }
+
+        .algorithm-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .algorithm-container {
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            padding: 20px;
+            background: #fafafa;
+        }
+
+        .algorithm-container h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+            text-align: center;
+            font-size: 1.5em;
+        }
+
+        .memory-display {
+            background: white;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            padding: 15px;
+            min-height: 400px;
+            margin-bottom: 20px;
+        }
+
+        .memory-block {
+            margin-bottom: 10px;
+            border-radius: 5px;
+            padding: 10px;
+            position: relative;
+            transition: all 0.5s ease;
+            border: 2px solid #ddd;
+            animation: fadeIn 0.5s;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.02);
+            }
+        }
+
+        .memory-block.allocating {
+            animation: pulse 0.6s ease-in-out;
+        }
+
+        .memory-block.free {
+            background: linear-gradient(135deg, #84fab0 0%, #8fd3f4 100%);
+            border-color: #4ecdc4;
+        }
+
+        .memory-block.occupied {
+            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+            border-color: #f093fb;
+        }
+
+        .memory-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .memory-label {
+            font-weight: 600;
+            color: #333;
+        }
+
+        .memory-size {
+            font-size: 0.9em;
+            color: #666;
+        }
+
+        .stats {
+            background: white;
+            border-radius: 8px;
+            padding: 15px;
+            border: 2px solid #ddd;
+        }
+
+        .stat-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .stat-item:last-child {
+            border-bottom: none;
+        }
+
+        .stat-label {
+            color: #666;
+            font-weight: 500;
+        }
+
+        .stat-value {
+            color: #667eea;
+            font-weight: 700;
+        }
+
+        .comparison {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 10px;
+            margin-top: 30px;
+        }
+
+        .comparison h3 {
+            color: #667eea;
+            margin-bottom: 20px;
+            text-align: center;
+            font-size: 1.5em;
+        }
+
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .comparison-card {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .comparison-card h4 {
+            color: #555;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+
+        .comparison-value {
+            font-size: 2em;
+            font-weight: 700;
+            color: #667eea;
+        }
+
+        .winner {
+            background: linear-gradient(135deg, #84fab0 0%, #8fd3f4 100%);
+        }
+
+        .winner .comparison-value {
+            color: #28a745;
+        }
+
+        .process-queue {
+            background: white;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 20px;
+        }
+
+        .process-queue h4 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .process-item {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            margin: 5px;
+            font-size: 0.9em;
+            animation: slideIn 0.3s;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .log {
+            background: #2d3748;
+            color: #a0aec0;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            max-height: 200px;
+            overflow-y: auto;
+            margin-top: 20px;
+        }
+
+        .log-entry {
+            margin-bottom: 5px;
+            padding: 3px 0;
+        }
+
+        .log-success {
+            color: #48bb78;
+        }
+
+        .log-error {
+            color: #f56565;
+        }
+
+        .log-info {
+            color: #4299e1;
+        }
+
+        @media (max-width: 768px) {
+            .algorithm-section {
+                grid-template-columns: 1fr;
+            }
+
+            .input-group {
+                flex-direction: column;
+            }
+
+            .input-field {
+                min-width: 100%;
+            }
+        }
+
+        .tooltip {
+            position: relative;
+            display: inline-block;
+        }
+
+        .tooltip .tooltiptext {
+            visibility: hidden;
+            background-color: #555;
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 5px 10px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            margin-left: -60px;
+            opacity: 0;
+            transition: opacity 0.3s;
+            font-size: 0.85em;
+        }
+
+        .tooltip:hover .tooltiptext {
+            visibility: visible;
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🧠 Simulador de Gestión de Memoria</h1>
+            <p class="subtitle">Comparación de algoritmos Best Fit vs Worst Fit</p>
+        </header>
+
+        <div class="content">
+            <div class="controls">
+                <div class="control-section">
+                    <h3>📊 Configuración de Memoria</h3>
+                    <div class="input-group">
+                        <div class="input-field">
+                            <label>Tamaño Total de Memoria (KB)</label>
+                            <input type="number" id="totalMemory" value="1024" min="100">
+                        </div>
+                        <div class="input-field">
+                            <label>Número de Bloques Iniciales</label>
+                            <input type="number" id="numBlocks" value="5" min="1" max="10">
+                        </div>
+                        <button class="btn-primary" onclick="initializeMemory()">Inicializar Memoria</button>
+                    </div>
+                </div>
+
+                <div class="control-section">
+                    <h3>⚙️ Agregar Proceso</h3>
+                    <div class="input-group">
+                        <div class="input-field">
+                            <label>ID del Proceso</label>
+                            <input type="number" id="processId" value="1" min="1">
+                        </div>
+                        <div class="input-field">
+                            <label>Tamaño del Proceso (KB)</label>
+                            <input type="number" id="processSize" value="100" min="1">
+                        </div>
+                        <button class="btn-success" onclick="addProcess()">Agregar Proceso</button>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <button class="btn-primary" onclick="executeAllocation()">▶️ Ejecutar Asignación</button>
+                    <button class="btn-secondary" onclick="resetSimulation()">🔄 Reiniciar Simulación</button>
+                    <button class="btn-danger" onclick="clearMemory()">🗑️ Limpiar Memoria</button>
+                </div>
+            </div>
+
+            <div class="process-queue" id="processQueue" style="display: none;">
+                <h4>Cola de Procesos Pendientes</h4>
+                <div id="queueDisplay"></div>
+            </div>
+
+            <div class="algorithm-section">
+                <div class="algorithm-container">
+                    <h2>🎯 Best Fit</h2>
+                    <div class="memory-display" id="bestFitMemory"></div>
+                    <div class="stats" id="bestFitStats"></div>
+                    <div class="log" id="bestFitLog"></div>
+                </div>
+
+                <div class="algorithm-container">
+                    <h2>📈 Worst Fit</h2>
+                    <div class="memory-display" id="worstFitMemory"></div>
+                    <div class="stats" id="worstFitStats"></div>
+                    <div class="log" id="worstFitLog"></div>
+                </div>
+            </div>
+
+            <div class="comparison">
+                <h3>📊 Comparación de Rendimiento</h3>
+                <div class="comparison-grid" id="comparisonGrid"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        class MemoryBlock {
+            constructor(start, size, isFree = true, processId = null) {
+                this.start = start;
+                this.size = size;
+                this.isFree = isFree;
+                this.processId = processId;
+            }
+        }
+
+        class MemoryManager {
+            constructor(totalSize, algorithm) {
+                this.totalSize = totalSize;
+                this.algorithm = algorithm;
+                this.blocks = [new MemoryBlock(0, totalSize, true)];
+                this.allocations = 0;
+                this.failures = 0;
+                this.log = [];
+            }
+
+            initializeBlocks(numBlocks) {
+                this.blocks = [];
+                const blockSize = Math.floor(this.totalSize / numBlocks);
+                let start = 0;
+
+                for (let i = 0; i < numBlocks; i++) {
+                    const size = i === numBlocks - 1 ? 
+                        this.totalSize - start : 
+                        blockSize + Math.floor(Math.random() * 50);
+                    
+                    this.blocks.push(new MemoryBlock(start, size, true));
+                    start += size;
+                }
+            }
+
+            allocate(processId, size) {
+                let targetBlock = null;
+
+                if (this.algorithm === 'bestfit') {
+                    let minDiff = Infinity;
+                    for (let block of this.blocks) {
+                        if (block.isFree && block.size >= size) {
+                            const diff = block.size - size;
+                            if (diff < minDiff) {
+                                minDiff = diff;
+                                targetBlock = block;
+                            }
+                        }
+                    }
+                } else if (this.algorithm === 'worstfit') {
+                    let maxSize = -1;
+                    for (let block of this.blocks) {
+                        if (block.isFree && block.size >= size && block.size > maxSize) {
+                            maxSize = block.size;
+                            targetBlock = block;
+                        }
+                    }
+                }
+
+                if (targetBlock) {
+                    const index = this.blocks.indexOf(targetBlock);
+                    
+                    if (targetBlock.size === size) {
+                        targetBlock.isFree = false;
+                        targetBlock.processId = processId;
+                    } else {
+                        const newBlock = new MemoryBlock(
+                            targetBlock.start, 
+                            size, 
+                            false, 
+                            processId
+                        );
+                        const remainingBlock = new MemoryBlock(
+                            targetBlock.start + size,
+                            targetBlock.size - size,
+                            true
+                        );
+                        
+                        this.blocks.splice(index, 1, newBlock, remainingBlock);
+                    }
+
+                    this.allocations++;
+                    this.addLog(`✓ Proceso P${processId} (${size}KB) asignado exitosamente`, 'success');
+                    return true;
+                } else {
+                    this.failures++;
+                    this.addLog(`✗ Proceso P${processId} (${size}KB) no pudo ser asignado`, 'error');
+                    return false;
+                }
+            }
+
+            deallocate(processId) {
+                for (let block of this.blocks) {
+                    if (!block.isFree && block.processId === processId) {
+                        block.isFree = true;
+                        block.processId = null;
+                        this.mergeBlocks();
+                        this.addLog(`↺ Proceso P${processId} liberado`, 'info');
+                        return true;
+                    }
+                }
+                return false;
+            }
+
+            mergeBlocks() {
+                let i = 0;
+                while (i < this.blocks.length - 1) {
+                    if (this.blocks[i].isFree && this.blocks[i + 1].isFree) {
+                        this.blocks[i].size += this.blocks[i + 1].size;
+                        this.blocks.splice(i + 1, 1);
+                    } else {
+                        i++;
+                    }
+                }
+            }
+
+            getFragmentation() {
+                let totalFree = 0;
+                let largestFree = 0;
+                let freeBlockCount = 0;
+
+                for (let block of this.blocks) {
+                    if (block.isFree) {
+                        totalFree += block.size;
+                        freeBlockCount++;
+                        if (block.size > largestFree) {
+                            largestFree = block.size;
+                        }
+                    }
+                }
+
+                const externalFragmentation = totalFree > 0 ? 
+                    ((totalFree - largestFree) / totalFree * 100) : 0;
+
+                return {
+                    totalFree,
+                    largestFree,
+                    externalFragmentation: externalFragmentation.toFixed(2),
+                    freeBlockCount
+                };
+            }
+
+            getUtilization() {
+                let used = 0;
+                for (let block of this.blocks) {
+                    if (!block.isFree) {
+                        used += block.size;
+                    }
+                }
+                return ((used / this.totalSize) * 100).toFixed(2);
+            }
+
+            addLog(message, type = 'info') {
+                this.log.push({ message, type, timestamp: new Date() });
+            }
+
+            clearLog() {
+                this.log = [];
+            }
+        }
+
+        let bestFitManager;
+        let worstFitManager;
+        let processQueue = [];
+        let nextProcessId = 1;
+
+        function initializeMemory() {
+            const totalMemory = parseInt(document.getElementById('totalMemory').value);
+            const numBlocks = parseInt(document.getElementById('numBlocks').value);
+
+            bestFitManager = new MemoryManager(totalMemory, 'bestfit');
+            worstFitManager = new MemoryManager(totalMemory, 'worstfit');
+
+            bestFitManager.initializeBlocks(numBlocks);
+            worstFitManager.initializeBlocks(numBlocks);
+
+            bestFitManager.addLog('Memoria inicializada', 'success');
+            worstFitManager.addLog('Memoria inicializada', 'success');
+
+            updateDisplay();
+        }
+
+        function addProcess() {
+            const processId = parseInt(document.getElementById('processId').value);
+            const processSize = parseInt(document.getElementById('processSize').value);
+
+            processQueue.push({ id: processId, size: processSize });
+            
+            document.getElementById('processId').value = processId + 1;
+            document.getElementById('processQueue').style.display = 'block';
+            
+            updateQueueDisplay();
+        }
+
+        function updateQueueDisplay() {
+            const queueDisplay = document.getElementById('queueDisplay');
+            queueDisplay.innerHTML = '';
+
+            processQueue.forEach(process => {
+                const processItem = document.createElement('div');
+                processItem.className = 'process-item';
+                processItem.textContent = `P${process.id}: ${process.size}KB`;
+                queueDisplay.appendChild(processItem);
+            });
+        }
+
+        async function executeAllocation() {
+            if (processQueue.length === 0) {
+                alert('No hay procesos en la cola');
+                return;
+            }
+
+            if (!bestFitManager || !worstFitManager) {
+                alert('Primero inicializa la memoria');
+                return;
+            }
+
+            for (let process of processQueue) {
+                await allocateWithAnimation(process);
+            }
+
+            processQueue = [];
+            document.getElementById('processQueue').style.display = 'none';
+            updateComparison();
+        }
+
+        async function allocateWithAnimation(process) {
+            bestFitManager.allocate(process.id, process.size);
+            worstFitManager.allocate(process.id, process.size);
+
+            updateDisplay();
+            
+            // Highlight allocated blocks
+            const bestFitBlocks = document.querySelectorAll('#bestFitMemory .memory-block');
+            const worstFitBlocks = document.querySelectorAll('#worstFitMemory .memory-block');
+            
+            bestFitBlocks.forEach(block => {
+                if (block.dataset.processId == process.id) {
+                    block.classList.add('allocating');
+                }
+            });
+            
+            worstFitBlocks.forEach(block => {
+                if (block.dataset.processId == process.id) {
+                    block.classList.add('allocating');
+                }
+            });
+
+            await new Promise(resolve => setTimeout(resolve, 600));
+            
+            bestFitBlocks.forEach(block => block.classList.remove('allocating'));
+            worstFitBlocks.forEach(block => block.classList.remove('allocating'));
+        }
+
+        function updateDisplay() {
+            if (!bestFitManager || !worstFitManager) return;
+
+            updateMemoryDisplay('bestFitMemory', bestFitManager);
+            updateMemoryDisplay('worstFitMemory', worstFitManager);
+
+            updateStats('bestFitStats', bestFitManager);
+            updateStats('worstFitStats', worstFitManager);
+
+            updateLog('bestFitLog', bestFitManager);
+            updateLog('worstFitLog', worstFitManager);
+        }
+
+        function updateMemoryDisplay(elementId, manager) {
+            const container = document.getElementById(elementId);
+            container.innerHTML = '';
+
+            manager.blocks.forEach((block, index) => {
+                const blockDiv = document.createElement('div');
+                blockDiv.className = `memory-block ${block.isFree ? 'free' : 'occupied'}`;
+                blockDiv.dataset.processId = block.processId;
+                
+                const heightPercent = (block.size / manager.totalSize) * 100;
+                blockDiv.style.height = Math.max(heightPercent * 3, 30) + 'px';
+
+                const info = document.createElement('div');
+                info.className = 'memory-info';
+
+                const label = document.createElement('span');
+                label.className = 'memory-label';
+                label.textContent = block.isFree ? 
+                    `Bloque Libre #${index + 1}` : 
+                    `Proceso P${block.processId}`;
+
+                const size = document.createElement('span');
+                size.className = 'memory-size';
+                size.textContent = `${block.size}KB (${heightPercent.toFixed(1)}%)`;
+
+                info.appendChild(label);
+                info.appendChild(size);
+                blockDiv.appendChild(info);
+
+                container.appendChild(blockDiv);
+            });
+        }
+
+        function updateStats(elementId, manager) {
+            const container = document.getElementById(elementId);
+            const frag = manager.getFragmentation();
+            const util = manager.getUtilization();
+
+            container.innerHTML = `
+                <div class="stat-item">
+                    <span class="stat-label">Utilización:</span>
+                    <span class="stat-value">${util}%</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Memoria Libre:</span>
+                    <span class="stat-value">${frag.totalFree}KB</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Bloque Libre Más Grande:</span>
+                    <span class="stat-value">${frag.largestFree}KB</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Fragmentación Externa:</span>
+                    <span class="stat-value">${frag.externalFragmentation}%</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Bloques Libres:</span>
+                    <span class="stat-value">${frag.freeBlockCount}</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Asignaciones Exitosas:</span>
+                    <span class="stat-value">${manager.allocations}</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Asignaciones Fallidas:</span>
+                    <span class="stat-value">${manager.failures}</span>
+                </div>
+            `;
+        }
+
+        function updateLog(elementId, manager) {
+            const container = document.getElementById(elementId);
+            container.innerHTML = '';
+
+            manager.log.slice(-10).forEach(entry => {
+                const logEntry = document.createElement('div');
+                logEntry.className = `log-entry log-${entry.type}`;
+                logEntry.textContent = `[${entry.timestamp.toLocaleTimeString()}] ${entry.message}`;
+                container.appendChild(logEntry);
+            });
+
+            container.scrollTop = container.scrollHeight;
+        }
+
+        function updateComparison() {
+            if (!bestFitManager || !worstFitManager) return;
+
+            const bestFrag = bestFitManager.getFragmentation();
+            const worstFrag = worstFitManager.getFragmentation();
+            const bestUtil = parseFloat(bestFitManager.getUtilization());
+            const worstUtil = parseFloat(worstFitManager.getUtilization());
+
+            const grid = document.getElementById('comparisonGrid');
+            grid.innerHTML = `
+                <div class="comparison-card ${bestUtil >= worstUtil ? 'winner' : ''}">
+                    <h4>Mejor Utilización</h4>
+                    <div class="comparison-value">${bestUtil >= worstUtil ? 'Best Fit' : 'Worst Fit'}</div>
+                    <p>${Math.max(bestUtil, worstUtil).toFixed(2)}%</p>
+                </div>
+                <div class="comparison-card ${parseFloat(bestFrag.externalFragmentation) <= parseFloat(worstFrag.externalFragmentation) ? 'winner' : ''}">
+                    <h4>Menor Fragmentación</h4>
+                    <div class="comparison-value">${parseFloat(bestFrag.externalFragmentation) <= parseFloat(worstFrag.externalFragmentation) ? 'Best Fit' : 'Worst Fit'}</div>
+                    <p>${Math.min(parseFloat(bestFrag.externalFragmentation), parseFloat(worstFrag.externalFragmentation)).toFixed(2)}%</p>
+                </div>
+                <div class="comparison-card ${bestFitManager.failures <= worstFitManager.failures ? 'winner' : ''}">
+                    <h4>Menos Fallas</h4>
+                    <div class="comparison-value">${bestFitManager.failures <= worstFitManager.failures ? 'Best Fit' : 'Worst Fit'}</div>
+                    <p>${Math.min(bestFitManager.failures, worstFitManager.failures)} fallas</p>
+                </div>
+                <div class="comparison-card ${bestFrag.largestFree >= worstFrag.largestFree ? 'winner' : ''}">
+                    <h4>Mayor Bloque Libre</h4>
+                    <div class="comparison-value">${bestFrag.largestFree >= worstFrag.largestFree ? 'Best Fit' : 'Worst Fit'}</div>
+                    <p>${Math.max(bestFrag.largestFree, worstFrag.largestFree)}KB</p>
+                </div>
+            `;
+        }
+
+        function clearMemory() {
+            if (!bestFitManager || !worstFitManager) return;
+
+            bestFitManager.blocks.forEach(block => {
+                block.isFree = true;
+                block.processId = null;
+            });
+
+            worstFitManager.blocks.forEach(block => {
+                block.isFree = true;
+                block.processId = null;
+            });
+
+            bestFitManager.mergeBlocks();
+            worstFitManager.mergeBlocks();
+
+            bestFitManager.addLog('Memoria limpiada', 'info');
+            worstFitManager.addLog('Memoria limpiada', 'info');
+
+            updateDisplay();
+            updateComparison();
+        }
+
+        function resetSimulation() {
+            bestFitManager = null;
+            worstFitManager = null;
+            processQueue = [];
+            
+            document.getElementById('processQueue').style.display = 'none';
+            document.getElementById('bestFitMemory').innerHTML = '';
+            document.getElementById('worstFitMemory').innerHTML = '';
+            document.getElementById('bestFitStats').innerHTML = '';
+            document.getElementById('worstFitStats').innerHTML = '';
+            document.getElementById('bestFitLog').innerHTML = '';
+            document.getElementById('worstFitLog').innerHTML = '';
+            document.getElementById('comparisonGrid').innerHTML = '';
+        }
+
+        // Initialize on load
+        window.onload = function() {
+            initializeMemory();
+        };
+    </script>
+</body>
+</html>
