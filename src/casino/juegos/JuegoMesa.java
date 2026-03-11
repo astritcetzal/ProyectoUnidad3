@@ -1,4 +1,4 @@
-package juegos;
+package juegos; 
 
 public abstract class JuegoMesa implements Jugable {
 
