@@ -22,7 +22,7 @@ public class Empleado extends Persona{
     public void setSalario(double salario){
         this.salario = salario;
     }
-    public  void  getMesaAsignada(JuegoMesa mesa){
+    public  String  getMesaAsignada(JuegoMesa mesa){
         return mesaAsignada;
     }
 

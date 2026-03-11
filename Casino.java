@@ -1,3 +1,4 @@
+import java.lang.annotation.Documented;
 import java.util.ArrayList;
 import java.util.List;
 public class Casino {
@@ -10,12 +11,11 @@ public class Casino {
     public Casino(String nombre){
         this.nombre = nombre;
         this.jugadores= new ArrayList<>();
-        this.empleado = new ArrayList<>();
-        this.JuegoMesa =new ArrayList<>();
+        this.empleados = new ArrayList<>();
+        this.juegos=new ArrayList<>();
 
     }
-    //En main List<JuegoMesa> juegos = List.of ();
-
+    
     public String getNombre(){
         return nombre;
     }
@@ -24,8 +24,34 @@ public class Casino {
         return cajaTotal;
     }
 
-    
+    public void setCajaTotal(double caja){
+        this.cajaTotal = caja;
+    }
 
+    public void registrarJugador(Jugador j){
+        jugadores.add(j);
+    }
+
+
+    public void agregarEmpleado(Empleado e){
+        empleados.add(e);
+    }
+    
+    //composicion 
+    public void agregarRuleta (String nombreRuleta){
+        Ruleta nuevaRuleta = new Ruleta(nombreRuleta);
+        this.juegos.add(nuevaRuleta);
+    }
+
+    public void agregarBlackJack  (String nombreBlackJack){
+        BlackJack nuevoBlackJack = new BlackJack (nombreBlackJack);
+        this.juegos.add(nuevoBlackJack);
+    }
+
+    @Override
+    public String toString(){
+        return "Casino: " + nombre + "- Caja: $" + cajaTotal;
+    }
 
  
 }
