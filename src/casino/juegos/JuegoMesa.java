@@ -1,4 +1,4 @@
-package juegos; 
+package juegos;
 import interfaces.Jugable;
 import persona.Jugador;
 public abstract class JuegoMesa implements Jugable {

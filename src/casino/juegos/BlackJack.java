@@ -1,7 +1,6 @@
 package juegos;
 
 import persona.Jugador;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -110,4 +109,6 @@ public class BlackJack extends JuegoMesa {
     public String getNombre() {
         return this.nombre;
     }
+
+    
 }
