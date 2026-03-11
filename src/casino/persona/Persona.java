@@ -1,4 +1,4 @@
-
+package persona;
 public abstract class Persona {
 
     private String nombre, apellido, cedula;

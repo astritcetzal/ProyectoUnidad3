@@ -1,3 +1,4 @@
+package persona;
 public class Jugador extends Persona {
     
     private double saldo;

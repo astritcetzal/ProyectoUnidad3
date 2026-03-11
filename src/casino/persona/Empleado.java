@@ -1,4 +1,4 @@
-
+package persona;
 
 import juegos.JuegoMesa;
 public class Empleado extends Persona {

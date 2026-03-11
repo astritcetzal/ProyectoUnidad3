@@ -1,4 +1,5 @@
 
+package persona;
 
 public class JugadorVIP extends Jugador {
 
