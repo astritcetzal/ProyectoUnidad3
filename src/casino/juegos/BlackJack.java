@@ -1,4 +1,5 @@
 package juegos;
+
 import interfaces.Jugable;
 import juegos.JuegoMesa;
 import persona.Jugador;
@@ -13,13 +14,13 @@ public class BlackJack extends JuegoMesa implements Jugable {
     private int puntosCasa;
     private List<Integer> mazo;
 
-    public BlackJack(String nombre){
-        super(nombre);
+    public BlackJack(String nombre, Jugador jugadorActual, int apuestaMinima, int apuestaMaxima, boolean activo) {
+        super(nombre, jugadorActual, apuestaMinima, apuestaMaxima, activo);
         this.mazo = new ArrayList<>();
         prepararMazo();
     }
 
-    private void prepararMazo(){
+    private void prepararMazo() {
         mazo.clear();
         for (int i = 0; i < 4; i++) {
             for (int j = 1; j <= 10; j++) {
@@ -29,14 +30,15 @@ public class BlackJack extends JuegoMesa implements Jugable {
         Collections.shuffle(mazo);
     }
 
-    private int sacarCarta(){
-        if (mazo.isEmpty()) prepararMazo();
+    private int sacarCarta() {
+        if (mazo.isEmpty())
+            prepararMazo();
         return mazo.remove(0);
     }
 
     @Override
-    public void iniciar(Jugador jugador){
-        if (jugador.getSaldo() < this.apuestaMinima){
+    public void iniciar(Jugador jugador) {
+        if (jugador.getSaldo() < this.apuestaMinima) {
             throw new IllegalArgumentException("Saldo insuficiente para iniciar apuesta minima");
         }
         this.puntosJugador = 0;
@@ -46,17 +48,18 @@ public class BlackJack extends JuegoMesa implements Jugable {
     }
 
     @Override
-    public void jugar(){
+    public void jugar() {
         repartirCartas();
         Scanner sc = new Scanner(System.in);
-        
+
         try {
-            while (this.puntosJugador < 21){
+            while (this.puntosJugador < 21) {
                 System.out.println("Puntos: " + puntosJugador + ". ¿Pedir? (s/n)");
                 String res = sc.nextLine();
                 if (res.equalsIgnoreCase("s")) {
                     this.puntosJugador += sacarCarta();
-                } else break;
+                } else
+                    break;
             }
 
             while (this.puntosCasa < 17 && this.puntosJugador <= 21) {
@@ -69,41 +72,41 @@ public class BlackJack extends JuegoMesa implements Jugable {
     }
 
     @Override
-    public void terminar(){
+    public void terminar() {
         this.activo = false;
         int resultado = calcularPuntos();
         System.out.println("Fin del juego. Resultado: " + (resultado == 1 ? "Gano Jugador" : "Gano Casa"));
     }
 
-    public void repartirCartas(){
+    public void repartirCartas() {
         this.puntosJugador = sacarCarta() + sacarCarta();
         this.puntosCasa = sacarCarta() + sacarCarta();
     }
 
-    public int calcularPuntos(){
-        if (puntosJugador > 21) 
+    public int calcularPuntos() {
+        if (puntosJugador > 21)
             return 2;
-        if (puntosCasa > 21 || puntosJugador > puntosCasa) 
+        if (puntosCasa > 21 || puntosJugador > puntosCasa)
             return 1;
-        if (puntosJugador < puntosCasa) 
+        if (puntosJugador < puntosCasa)
             return 2;
         return 0;
     }
 
-    public int getPuntosJugador(){ 
-        return puntosJugador; 
+    public int getPuntosJugador() {
+        return puntosJugador;
     }
 
-    public int getPuntosCasa(){ 
-        return puntosCasa; 
+    public int getPuntosCasa() {
+        return puntosCasa;
     }
 
-    public List<Integer> getMazo(){ 
-        return mazo; 
+    public List<Integer> getMazo() {
+        return mazo;
     }
-    
+
     @Override
-    public String getNombre(){ 
-        return this.nombre; 
+    public String getNombre() {
+        return this.nombre;
     }
 }
