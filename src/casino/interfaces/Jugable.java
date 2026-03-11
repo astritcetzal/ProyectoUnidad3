@@ -12,4 +12,6 @@ public interface Jugable {
     public String getNombre();
     
     
+
+    
 }
