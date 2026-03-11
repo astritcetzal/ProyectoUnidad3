@@ -1,4 +1,4 @@
-package persona;
+package src.casino.persona;
 public class Jugador extends Persona {
     
     private double saldo;
