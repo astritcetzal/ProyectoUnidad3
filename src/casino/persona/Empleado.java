@@ -40,7 +40,7 @@ public class Empleado extends Persona {
     }
 
     public void setMesaAsignada(JuegoMesa mesa) {
-        if (mesaAsignada == null) {
+        if (mesa == null) {
             throw new IllegalArgumentException("Debe asignar mesa");
         }
         this.mesaAsignada = mesa;
