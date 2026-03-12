@@ -113,4 +113,12 @@ public class BlackJack extends JuegoMesa {
     public int getPuntosCasa() {
         return puntosCasa; 
     }
+
+    public String getNombre(){
+        return this.nombre; 
+    }
+
+    public List<Integer>getMazo(){
+        return mazo; 
+    }
 }
