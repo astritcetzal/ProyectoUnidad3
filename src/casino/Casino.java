@@ -21,7 +21,6 @@ public class Casino {
         this.jugadores = new ArrayList<>();
         this.empleados = new ArrayList<>();
         this.juegos = new ArrayList<>();
-
     }
 
     public String getNombre() {
@@ -45,17 +44,13 @@ public class Casino {
     }
 
     // composicion
-    public void agregarRuleta(String nombreRuleta) {
-        if (nombreRuleta == null || nombreRuleta.isEmpty())
-            throw new IllegalArgumentException("El nombre de la Ruleta no puede estar vacio");
-        JuegoMesa nuevaRuleta = new Ruleta(nombreRuleta, null, 0, 0, false);
+    public void agregarRuleta(String nombreRuleta, Jugador jugadorActual, double apuestaMinima, double apuestaMaxima, boolean activo) {
+        JuegoMesa nuevaRuleta = new Ruleta(nombreRuleta, jugadorActual, apuestaMinima, apuestaMaxima, activo);
         this.juegos.add(nuevaRuleta);
     }
 
-    public void agregarBlackJack(String nombreBlackJack) {
-        if (nombreBlackJack == null || nombreBlackJack.isEmpty())
-            throw new IllegalArgumentException("El nombre del BlackJack no puede estar vacio");
-        JuegoMesa nuevoBlackJack = new BlackJack(nombreBlackJack, null, 0, 0, false);
+    public void agregarBlackJack(String nombreBlackJack, Jugador jugadorActual, double apuestaMinima, double apuestaMaxima, boolean activo) {
+        JuegoMesa nuevoBlackJack = new BlackJack(nombreBlackJack,jugadorActual, apuestaMinima, apuestaMaxima, activo);
         this.juegos.add(nuevoBlackJack);
     }
 

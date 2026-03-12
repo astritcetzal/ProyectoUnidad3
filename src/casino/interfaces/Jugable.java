@@ -1,6 +1,5 @@
 package interfaces;
 import persona.Jugador;
-
 public interface Jugable {
 
     public void iniciar(Jugador j);
