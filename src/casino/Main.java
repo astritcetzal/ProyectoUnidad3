@@ -23,18 +23,19 @@ public class Main {
         System.out.println(empleado);
         System.out.println(casino);
 
-        Ruleta ruleta = new Ruleta("Ruleta VIP", juan, 100.0, 5000.0, false);
+
+        Ruleta ruleta = casino.agregarRuleta("Ruleta VIP", juan, 100.0, 5000.0, false);
         ruleta.iniciar(juan);
         ruleta.setApuesta(7, "Rojo", 500.0);
         ruleta.jugar();
         ruleta.terminar();
 
-        maria.aplicarBonus();
 
-        BlackJack bj = new BlackJack("Mesa BlackJack 1", maria, 100.0, 10000.0, false);
+        maria.aplicarBonus();
+        BlackJack bj = casino.agregarBlackJack("Mesa BlackJack 1", maria, 100.0, 10000.0, false);
         bj.iniciar(maria);
         bj.jugar();
-
+            
         empleado.supervisarMesa();
     }
 }

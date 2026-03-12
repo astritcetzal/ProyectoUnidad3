@@ -44,14 +44,20 @@ public class Casino {
     }
 
     // composicion
-    public void agregarRuleta(String nombreRuleta, Jugador jugadorActual, double apuestaMinima, double apuestaMaxima, boolean activo) {
-        JuegoMesa nuevaRuleta = new Ruleta(nombreRuleta, jugadorActual, apuestaMinima, apuestaMaxima, activo);
+    public Ruleta agregarRuleta(String nombreRuleta, Jugador jugadorActual, double apuestaMinima, double apuestaMaxima, boolean activo) {
+        Ruleta nuevaRuleta = new Ruleta(nombreRuleta, jugadorActual, apuestaMinima, apuestaMaxima, activo);
+       
         this.juegos.add(nuevaRuleta);
+        return nuevaRuleta;
+
+        
     }
 
-    public void agregarBlackJack(String nombreBlackJack, Jugador jugadorActual, double apuestaMinima, double apuestaMaxima, boolean activo) {
-        JuegoMesa nuevoBlackJack = new BlackJack(nombreBlackJack,jugadorActual, apuestaMinima, apuestaMaxima, activo);
+    public BlackJack agregarBlackJack(String nombreBlackJack, Jugador jugadorActual, double apuestaMinima, double apuestaMaxima, boolean activo) {
+        BlackJack nuevoBlackJack = new BlackJack(nombreBlackJack,jugadorActual, apuestaMinima, apuestaMaxima, activo);
         this.juegos.add(nuevoBlackJack);
+
+        return nuevoBlackJack;
     }
 
     @Override
