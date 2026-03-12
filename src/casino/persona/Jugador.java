@@ -1,4 +1,5 @@
 package persona;
+import interfaces.Apostable;
 
 
 public class Jugador extends Persona implements Apostable {
