@@ -1,3 +1,4 @@
+package Sistema;
 
 import juegos.BlackJack;
 import juegos.JuegoMesa;
@@ -44,17 +45,18 @@ public class Casino {
     }
 
     // composicion
-    public Ruleta agregarRuleta(String nombreRuleta, Jugador jugadorActual, double apuestaMinima, double apuestaMaxima, boolean activo) {
+    public Ruleta agregarRuleta(String nombreRuleta, Jugador jugadorActual, double apuestaMinima, double apuestaMaxima,
+            boolean activo) {
         Ruleta nuevaRuleta = new Ruleta(nombreRuleta, jugadorActual, apuestaMinima, apuestaMaxima, activo);
-       
+
         this.juegos.add(nuevaRuleta);
         return nuevaRuleta;
 
-        
     }
 
-    public BlackJack agregarBlackJack(String nombreBlackJack, Jugador jugadorActual, double apuestaMinima, double apuestaMaxima, boolean activo) {
-        BlackJack nuevoBlackJack = new BlackJack(nombreBlackJack,jugadorActual, apuestaMinima, apuestaMaxima, activo);
+    public BlackJack agregarBlackJack(String nombreBlackJack, Jugador jugadorActual, double apuestaMinima,
+            double apuestaMaxima, boolean activo) {
+        BlackJack nuevoBlackJack = new BlackJack(nombreBlackJack, jugadorActual, apuestaMinima, apuestaMaxima, activo);
         this.juegos.add(nuevoBlackJack);
 
         return nuevoBlackJack;
