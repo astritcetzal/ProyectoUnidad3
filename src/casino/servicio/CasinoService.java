@@ -7,6 +7,9 @@ import persona.Empleado;
 import persona.Jugador;
 import java.util.ArrayList;
 import java.util.List;
+
+import Exceptions.CedulaEmpleadoDuplicadoException;
+import Exceptions.IDJugadorDuplicadoException;
 import Sistema.Casino;
 
 public class CasinoService {
@@ -21,18 +24,20 @@ public class CasinoService {
         this.casino = casino;
     }
 
-    public void agregarJugador(Jugador jugador) {
-        if (jugador == null)
+    public void agregarJugador(Jugador j) throws IDJugadorDuplicadoException {
+        if (j == null)
             throw new IllegalArgumentException("El jugador no puede ser nulo");
-
-        if (jugador.getEdad() < 18)
+ 
+        if (j.getEdad() < 18)
             throw new IllegalArgumentException("El jugador debe ser mayor de edad");
 
-        for (Jugador j : jugadores)
-            if (j.getIdJugador().equals(jugador.getIdJugador()))
-                throw new IllegalArgumentException("Ya existe un jugador con ese ID");
-        jugadores.add(jugador);
-        casino.registrarJugador(jugador);
+        for(Jugador jg: jugadores){
+            if (jg.getIdJugador().equals(j.getIdJugador())){
+                throw new IDJugadorDuplicadoException (j.getIdJugador());
+            }
+        }
+        jugadores.add(j);
+        casino.registrarJugador(j);
     }
 
     public Jugador buscarJugador(String id) {
@@ -65,12 +70,15 @@ public class CasinoService {
         jugadores.remove(buscarJugador(id));
     }
 
-    public void agregarEmpleado(Empleado empleado) {
+    public void agregarEmpleado(Empleado empleado) throws CedulaEmpleadoDuplicadoException {
         if (empleado == null)
             throw new IllegalArgumentException("El empleado no puede ser nulo");
-        for (Empleado e : empleados)
-            if (e.getCedula().equals(empleado.getCedula()))
-                throw new IllegalStateException("Ya existe un empleado con esa cédula");
+        for (Empleado e : empleados){
+            if (e.getCedula().equals(empleado.getCedula())){
+                throw new CedulaEmpleadoDuplicadoException(empleado.getCedula());
+            }
+        }
+        
         empleados.add(empleado);
         casino.agregarEmpleado(empleado);
 

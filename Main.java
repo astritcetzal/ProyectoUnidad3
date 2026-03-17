@@ -1,6 +1,3 @@
-
-import Sistema;
-import servicio.CasinoService;
 import juegos.BlackJack;
 import juegos.Ruleta;
 import persona.Jugador;
@@ -17,7 +14,7 @@ public class Main {
         Jugador juan = new Jugador("Juan", "Pérez", "123456", 30, 5000.0, "J001");
         JugadorVIP maria = new JugadorVIP("María", "Gómez", "789012", 28, 20000.0, "VIP001", "Gold", 15000.0, 10.0);
         Empleado empleado = new Empleado("Carlos", "López", "111222", 40, "Dealer", 3000.0);
-
+        
         casino.registrarJugador(juan);
         casino.registrarJugador(maria);
         casino.agregarEmpleado(empleado);
