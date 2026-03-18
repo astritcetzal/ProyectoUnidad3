@@ -91,7 +91,7 @@ public class CasinoService {
 
     }
 
-    //revisar
+   
     public Empleado buscarEmpleado(String cedula) {
         for (Empleado e : empleados)
             if (e.getCedula().equals(cedula)) {
@@ -128,7 +128,7 @@ public class CasinoService {
             throw new IllegalArgumentException("La apuesta máxima debe ser mayor que la mínima");
         }
         Ruleta ruleta = casino.agregarRuleta(nombre, buscarJugador(idJugador), min, max, false);
-        juegos.add(ruleta);//quitarlo
+        juegos.add(ruleta);
         return ruleta;
     }
 
@@ -137,7 +137,7 @@ public class CasinoService {
             throw new IllegalArgumentException("La apuesta máxima debe ser mayor que la mínima");
         }
         BlackJack bj = casino.agregarBlackJack(nombre, buscarJugador(idJugador), min, max, false);
-        juegos.add(bj);  //quitarlo
+        juegos.add(bj);  
         return bj;
     }
 
@@ -147,7 +147,6 @@ public class CasinoService {
                 return j;
             }
         return null;
-            //throw new IllegalArgumentException("No se encontró el juego: " + nombre);
     }
 
     public List<JuegoMesa> filtrarActivos() {

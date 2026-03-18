@@ -10,7 +10,7 @@ public class Empleado extends Persona {
     public Empleado(String nombre, String apellido, String cedula, int edad, String cargo, double salario) {
         super(nombre, apellido, cedula, edad);
         if (cargo == null || cargo.isEmpty()) {
-            throw new IllegalArgumentException("El juego no puede no tener nombre");
+            throw new IllegalArgumentException("El empleado debe tener nombre");
         }
         if (salario < 0) {
             throw new IllegalArgumentException("El salario no puede ser menor a 0");
