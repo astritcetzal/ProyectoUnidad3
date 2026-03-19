@@ -52,29 +52,30 @@ public class Ruleta extends JuegoMesa {
         if (j == null) {
             throw new IllegalArgumentException("No se puede iniciar la Ruleta sin un jugador");
         }
-        this.jugadorActual = j;
-        this.activo = true;
+        setJugadoreActual(j);
+        boolean activo = true;
+        setActivo(activo);
         System.out.println("══════════════════════════════════════");
         System.out.println("  Bienvenido a la Ruleta, " + j.getNombre() + "!");
-        System.out.println("  Apuesta mínima : $" + apuestaMinima);
-        System.out.println("  Apuesta máxima : $" + apuestaMaxima);
+        System.out.println("  Apuesta mínima : $" + getApuestaMinima());
+        System.out.println("  Apuesta máxima : $" + getApuestamaxima());
         System.out.println("  Saldo actual   : $" + j.getSaldo());
         System.out.println("══════════════════════════════════════");
     }
 
     @Override
     public void jugar() {
-        if (!activo || jugadorActual == null) {
+        if (!isActivo() || getJugadorActual() == null) {
             throw new IllegalArgumentException("La Ruleta debe estar activa o no tienes un jugador asignado");
         }
 
         if (!validarApuesta(montoApuesta)) {
             throw new IllegalArgumentException(
-                    "Apuesta inválida. El monto debe estar entre " + apuestaMinima + " y " + apuestaMaxima);
+                    "Apuesta inválida. El monto debe estar entre " + getApuestaMinima() + " y " + getApuestamaxima());
         }
 
         // Empieza el flujo despues de validar
-        jugadorActual.apostar(montoApuesta);
+        getJugadorActual().apostar(montoApuesta);
 
         girarRuleta();
         System.out.println("══════════════════════════════════════");
@@ -89,11 +90,11 @@ public class Ruleta extends JuegoMesa {
         if (acertoNumero) {
             double pago = montoApuesta * PAGO_NUMERO;
             System.out.println("¡Acertaste el número! Ganaste $" + pago);
-            jugadorActual.recibirPago(pago);
+            getJugadorActual().recibirPago(pago);
         } else if (acertoColor) {
             double pago = montoApuesta * PAGO_COLOR;
             System.out.println("¡Acertaste el color! Ganaste $" + pago);
-            jugadorActual.recibirPago(pago);
+            getJugadorActual().recibirPago(pago);
         } else {
             System.out.println("No acertaste. Perdiste $" + montoApuesta);
         }
@@ -106,15 +107,15 @@ public class Ruleta extends JuegoMesa {
 
     @Override
     public void terminar() {
-        if (jugadorActual != null) {
+        if (getJugadorActual() != null) {
             System.out.println("══════════════════════════════════════");
             System.out.println("  Fin de la partida de Ruleta.");
-            System.out.println("  Jugador     : " + jugadorActual.getNombre());
-            System.out.println("  Saldo final : $" + jugadorActual.getSaldo());
+            System.out.println("  Jugador     : " + getJugadorActual().getNombre());
+            System.out.println("  Saldo final : $" + getJugadorActual().getSaldo());
             System.out.println("══════════════════════════════════════");
         }
-        this.activo = false;
-        this.jugadorActual = null;
+        setActivo(false);
+        setJugadoreActual(null);
     }
 
     public int girarRuleta() {
@@ -131,19 +132,14 @@ public class Ruleta extends JuegoMesa {
     }
 
     @Override
-    public String getNombre() {
-        return nombre;
-    }
-
-    @Override
     public String toString() {
         return "Ruleta{" +
-                "nombre='" + nombre + '\'' +
-                ", apuestaMin=$" + apuestaMinima +
-                ", apuestaMax=$" + apuestaMaxima +
-                ", activo=" + activo +
-                ", numeroGanador=" + numeroGanador +
-                ", colorGanador='" + colorGanador + '\'' +
+                "nombre='" + getNombre() + '\'' +
+                ", apuestaMin: $" + getApuestaMinima() +
+                ", apuestaMax: $" + getApuestamaxima() +
+                ", activo: " + isActivo() +
+                ", numeroGanador: " + numeroGanador +
+                ", colorGanador: " + colorGanador + '\'' +
                 '}';
     }
 
