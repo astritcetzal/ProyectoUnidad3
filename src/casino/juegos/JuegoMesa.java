@@ -3,10 +3,10 @@ import interfaces.Jugable;
 import persona.Jugador;
 public abstract class JuegoMesa implements Jugable {
 
-    protected String nombre;
-    protected Jugador jugadorActual;
-    protected double apuestaMinima, apuestaMaxima;
-    protected boolean activo;
+    private String nombre;
+    private Jugador jugadorActual;
+    private double apuestaMinima, apuestaMaxima;
+    private boolean activo;
 
     //creo que si serian en agregarRuleta y agregarBlackjack las validaciones
     public JuegoMesa(String nombre, Jugador jugadorActual, double apuestaMinima, double apuestaMaxima, boolean activo){
@@ -15,9 +15,9 @@ public abstract class JuegoMesa implements Jugable {
         if (jugadorActual== null)
             throw new IllegalArgumentException("Agregar a un jugador");
         if (apuestaMinima < 100.00)
-            throw new IllegalArgumentException("Apostar minimo 200 pesos");
+            throw new IllegalArgumentException("Apostar minimo 100 pesos");
         if (apuestaMinima > 35000.00)
-            throw new IllegalArgumentException("No apostar más de 30000");
+            throw new IllegalArgumentException("No apostar más de 35000");
 
         this.nombre = nombre;
         this.jugadorActual = jugadorActual;
@@ -40,6 +40,7 @@ public abstract class JuegoMesa implements Jugable {
 
     public void setApuestaMinima(double apuestaMinima){
         if (apuestaMinima < 0){ throw new IllegalArgumentException("Tiene q ser mayor a 0");}
+        this.apuestaMinima = apuestaMinima;
     }
 
     //APUESTAMAXIMA
