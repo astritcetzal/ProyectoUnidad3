@@ -1,4 +1,5 @@
 package servicio;
+
 import juegos.BlackJack;
 import juegos.JuegoMesa;
 import juegos.Ruleta;
@@ -9,6 +10,8 @@ import java.util.Iterator;
 import java.util.List;
 import Exceptions.CedulaEmpleadoDuplicadoException;
 import Exceptions.IDJugadorDuplicadoException;
+import Persistencia.JugadorRepository;
+import Persistencia.Repositorio;
 import Sistema.Casino;
 
 public class CasinoService {
@@ -16,27 +19,33 @@ public class CasinoService {
     private List<Empleado> empleados = new ArrayList<>();
     private List<JuegoMesa> juegos = new ArrayList<>();
     private Casino casino;
+    private Repositorio<Jugador> jugadorRepo;
 
     public CasinoService(Casino casino) {
         if (casino == null)
             throw new IllegalArgumentException("El casino no puede ser nulo");
         this.casino = casino;
+        this.jugadorRepo = new JugadorRepository();
+        this.jugadores = jugadorRepo.cargar();
+        for (Jugador j : jugadores)
+            casino.registrarJugador(j);
     }
 
     public void agregarJugador(Jugador j) throws IDJugadorDuplicadoException {
         if (j == null)
             throw new IllegalArgumentException("El jugador no puede ser nulo");
- 
+
         if (j.getEdad() < 18)
             throw new IllegalArgumentException("El jugador debe ser mayor de edad");
 
-        for(Jugador jg: jugadores){
-            if (jg.getIdJugador().equals(j.getIdJugador())){
-                throw new IDJugadorDuplicadoException (j.getIdJugador());
-             }
+        for (Jugador jg : jugadores) {
+            if (jg.getIdJugador().equals(j.getIdJugador())) {
+                throw new IDJugadorDuplicadoException(j.getIdJugador());
+            }
         }
         jugadores.add(j);
         casino.registrarJugador(j);
+        jugadorRepo.guardar(jugadores);
     }
 
     public Jugador buscarJugador(String id) {
@@ -65,13 +74,13 @@ public class CasinoService {
         return resultado;
     }
 
-    //iterator 
     public void eliminarJugador(String id) {
         Iterator<Jugador> iterator = jugadores.iterator();
         while (iterator.hasNext()) {
             Jugador j = iterator.next();
             if (j.getIdJugador().equals(id)) {
                 iterator.remove();
+                jugadorRepo.guardar(jugadores);
                 return;
             }
         }
@@ -81,8 +90,8 @@ public class CasinoService {
     public void agregarEmpleado(Empleado empleado) throws CedulaEmpleadoDuplicadoException {
         if (empleado == null)
             throw new IllegalArgumentException("El empleado no puede ser nulo");
-        for (Empleado e : empleados){
-            if (e.getCedula().equals(empleado.getCedula())){
+        for (Empleado e : empleados) {
+            if (e.getCedula().equals(empleado.getCedula())) {
                 throw new CedulaEmpleadoDuplicadoException(empleado.getCedula());
             }
         }
@@ -91,7 +100,6 @@ public class CasinoService {
 
     }
 
-   
     public Empleado buscarEmpleado(String cedula) {
         for (Empleado e : empleados)
             if (e.getCedula().equals(cedula)) {
@@ -110,7 +118,6 @@ public class CasinoService {
         return resultado;
     }
 
-    //iterator
     public void eliminarEmpleado(String cedula) {
         Iterator<Empleado> iterator = empleados.iterator();
         while (iterator.hasNext()) {
@@ -137,7 +144,7 @@ public class CasinoService {
             throw new IllegalArgumentException("La apuesta máxima debe ser mayor que la mínima");
         }
         BlackJack bj = casino.agregarBlackJack(nombre, buscarJugador(idJugador), min, max, false);
-        juegos.add(bj);  
+        juegos.add(bj);
         return bj;
     }
 
