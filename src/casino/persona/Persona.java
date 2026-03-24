@@ -30,6 +30,9 @@ public abstract class Persona {
     }
 
     public void setNombre(String nombre) {
+        if (nombre == null || nombre.trim().isEmpty()) {
+            throw new IllegalArgumentException("Datos como Nombre no puede estar vacío o nulo");
+        }
         this.nombre = nombre;
     }
 
@@ -38,6 +41,9 @@ public abstract class Persona {
     }
 
     public void setApellido(String apellido) {
+        if (apellido == null || apellido.trim().isEmpty()) {
+            throw new IllegalArgumentException("Datos como Apellido no puede estar vacío o nulo");
+        }
         this.apellido = apellido;
     }
 
@@ -46,6 +52,9 @@ public abstract class Persona {
     }
 
     public void setCedula(String cedula) {
+        if (cedula == null || cedula.trim().isEmpty()) {
+            throw new IllegalArgumentException("Datos como Cédula no puede estar vacío o nulo");
+        }
         this.cedula = cedula;
     }
 
@@ -54,6 +63,9 @@ public abstract class Persona {
     }
 
     public void setEdad(int edad) {
+        if (edad < 18) {
+            throw new IllegalArgumentException("Debes ser mayor de edad para entrar a un Casino");
+        }
         this.edad = edad;
     }
 
