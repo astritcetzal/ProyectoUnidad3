@@ -19,7 +19,6 @@ public class JugadorRepository implements Repositorio<Jugador> {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(ARCHIVO))) {
             for (Jugador j : lista) {
                 bw.write(j.toCSV());
-                bw.newLine();
             }
         } catch (IOException e) {
             System.out.println("Error al guardar jugadores: " + e.getMessage());
@@ -31,14 +30,14 @@ public class JugadorRepository implements Repositorio<Jugador> {
         List<Jugador> lista = new ArrayList<>();
         File archivo = new File(ARCHIVO);
 
-        if (!archivo.exists()) {
+        if (archivo.exists()) {
             return lista;
         }
 
         try (BufferedReader br = new BufferedReader(new FileReader(archivo))) {
             String linea;
             while ((linea = br.readLine()) != null) {
-                if (linea.isBlank()) {
+                if (linea.isEmpty()) {
                     continue;
                 }
                 try {
