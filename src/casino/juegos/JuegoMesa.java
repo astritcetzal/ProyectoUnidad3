@@ -12,11 +12,11 @@ public abstract class JuegoMesa implements Jugable {
     public JuegoMesa(String nombre, Jugador jugadorActual, double apuestaMinima, double apuestaMaxima, boolean activo){
         if (nombre == null || nombre.isEmpty())
             throw new IllegalArgumentException("El nombre de la Ruleta no puede estar vacio");
-        if (jugadorActual== null)
+        if (jugadorActual == null)
             throw new IllegalArgumentException("Agregar a un jugador");
         if (apuestaMinima < 100.00)
             throw new IllegalArgumentException("Apostar minimo 100 pesos");
-        if (apuestaMinima > 35000.00)
+        if (apuestaMaxima > 35000.00)
             throw new IllegalArgumentException("No apostar más de 35000");
 
         this.nombre = nombre;
@@ -54,7 +54,7 @@ public abstract class JuegoMesa implements Jugable {
     //JUGADORACTUAL
     public Jugador getJugadorActual(){ return jugadorActual; }
 
-    public void setJugadoreActual(Jugador jugadorActual){ this.jugadorActual = jugadorActual; }
+    public void setJugadorActual(Jugador jugadorActual){ this.jugadorActual = jugadorActual; }
 
     //ACTIVO
     public boolean isActivo(){ return activo; }

@@ -84,20 +84,5 @@ public class JugadorVIP extends Jugador {
     @Override
     public String getRol(){
         return "Jugador VIP";
-    }
-
-    public String toCSV() {
-        return getIdJugador() + "," + getNombre() + "," + getApellido() + "," +
-           getCedula() + "," + getEdad() + "," + getSaldo() + ",JugadorVIP," +
-           getNivelVIP() + "," + getLimiteApuestaEspecial() + "," + getPorcentajeBonus();
-    }
-
-    public static JugadorVIP fromCSV(String linea) {
-        String[] p = linea.split(",");
-        if (p.length < 10) throw new IllegalArgumentException("Línea CSV inválida: " + linea);
-        return new JugadorVIP(p[1], p[2], p[3], Integer.parseInt(p[4].trim()),
-                              Double.parseDouble(p[5].trim()), p[0], p[7],
-                              Double.parseDouble(p[8].trim()), Double.parseDouble(p[9].trim()));
-    }
-    
+    } 
 }
