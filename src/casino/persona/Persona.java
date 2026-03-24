@@ -7,13 +7,13 @@ public abstract class Persona {
 
     public Persona(String nombre, String apellido, String cedula, int edad) {
         if (nombre == null || nombre.trim().isEmpty()) {
-            throw new IllegalArgumentException("Datos como Nombre no puede estar vacio o nulo");
+            throw new IllegalArgumentException("Datos como Nombre no puede estar vacío o nulo");
         }
         if (apellido == null || apellido.trim().isEmpty()) {
-            throw new IllegalArgumentException("Datos como Apelido no puede estar vacio o nulo");
+            throw new IllegalArgumentException("Datos como Apellido no puede estar vacío o nulo");
         }
         if (cedula == null || cedula.trim().isEmpty()) {
-            throw new IllegalArgumentException("Datos como Cédula no puede estar vacio o nulo");
+            throw new IllegalArgumentException("Datos como Cédula no puede estar vacío o nulo");
         }
         if (edad < 18) {
             throw new IllegalArgumentException("Debes ser mayor de edad para entrar a un Casino");
