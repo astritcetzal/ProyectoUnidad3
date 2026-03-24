@@ -18,6 +18,8 @@ public abstract class JuegoMesa implements Jugable {
             throw new IllegalArgumentException("Apostar minimo 100 pesos");
         if (apuestaMaxima > 35000.00)
             throw new IllegalArgumentException("No apostar más de 35000");
+        if (apuestaMinima >= apuestaMaxima)
+            throw new IllegalArgumentException("La apuesta mínima no puede ser mayor o igual a la máxima");
 
         this.nombre = nombre;
         this.jugadorActual = jugadorActual;
