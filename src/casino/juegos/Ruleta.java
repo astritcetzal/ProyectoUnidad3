@@ -35,7 +35,7 @@ public class Ruleta extends JuegoMesa {
 
     public void setApuesta(int numeroElegido, String colorElegido, double monto) {
         if (numeroElegido < 0 || numeroElegido >= 36) {
-            throw new IllegalArgumentException("El numero Elegido debe estar entre 0 y 36");
+            throw new IllegalArgumentException("El número elegido debe estar entre 0 y 36");
         }
         if (!colorElegido.equalsIgnoreCase("Rojo") && !colorElegido.equalsIgnoreCase("Negro")
                 && !colorElegido.equalsIgnoreCase("Verde")) {
@@ -52,7 +52,7 @@ public class Ruleta extends JuegoMesa {
         if (j == null) {
             throw new IllegalArgumentException("No se puede iniciar la Ruleta sin un jugador");
         }
-        setJugadoreActual(j);
+        setJugadorActual(j);
         boolean activo = true;
         setActivo(activo);
         System.out.println("══════════════════════════════════════");
@@ -74,7 +74,7 @@ public class Ruleta extends JuegoMesa {
                     "Apuesta inválida. El monto debe estar entre " + getApuestaMinima() + " y " + getApuestamaxima());
         }
 
-        // Empieza el flujo despues de validar
+        // Empieza el flujo después de validar
         getJugadorActual().apostar(montoApuesta);
 
         girarRuleta();
@@ -115,7 +115,7 @@ public class Ruleta extends JuegoMesa {
             System.out.println("══════════════════════════════════════");
         }
         setActivo(false);
-        setJugadoreActual(null);
+        setJugadorActual(null);
     }
 
     public int girarRuleta() {
