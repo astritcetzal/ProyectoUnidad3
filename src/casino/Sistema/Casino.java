@@ -9,14 +9,14 @@ import java.util.List;
 
 public class Casino {
     private String nombre;
-    private List<Jugador> jugadores; // agrgacion
-    private List<Empleado> empleados; // agregacion
-    private List<JuegoMesa> juegos; // composicion
+    private List<Jugador> jugadores; // agregación
+    private List<Empleado> empleados; // agregación
+    private List<JuegoMesa> juegos; // composición
     private double cajaTotal;
 
     public Casino(String nombre) {
         if (nombre == null || nombre.isEmpty())
-            throw new IllegalArgumentException("El nombre no puede estar vacio");
+            throw new IllegalArgumentException("El nombre no puede estar vacío");
         this.nombre = nombre;
         this.jugadores = new ArrayList<>();
         this.empleados = new ArrayList<>();
@@ -43,7 +43,7 @@ public class Casino {
         empleados.add(e);
     }
 
-    // composicion
+    // composición
     public Ruleta agregarRuleta(String nombreRuleta, Jugador jugadorActual, double apuestaMinima, double apuestaMaxima,
             boolean activo) {
         Ruleta nuevaRuleta = new Ruleta(nombreRuleta, jugadorActual, apuestaMinima, apuestaMaxima, activo);
