@@ -64,17 +64,4 @@ public class Empleado extends Persona {
     public String getRol() {
         return "Empleado";
     }
-
-    public String toCSV() {
-        return getCedula() + "," + getNombre() + "," + getApellido() + "," +
-           getEdad() + "," + getCargo() + "," + getSalario();
-    }
-
-    public static Empleado fromCSV(String linea) {
-        String[] p = linea.split(",");
-        if (p.length < 6) throw new IllegalArgumentException("Línea CSV inválida: " + linea);
-        return new Empleado(p[1], p[2], p[0], Integer.parseInt(p[3].trim()),
-                            p[4], Double.parseDouble(p[5].trim()));
-    }
-
 }
