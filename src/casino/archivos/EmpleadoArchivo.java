@@ -1,4 +1,4 @@
-package persistencia;
+package archivos;
 import java.util.ArrayList;
 import java.util.List;
 import java.io.BufferedReader;
@@ -9,10 +9,10 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import persona.Empleado;
 
-public class EmpleadoRepositorio implements Repositorio<Empleado> {
+public class EmpleadoArchivo {
     private static final String NOMBREARCHIVO = "empleado.csv";
 
-    @Override
+   
     public void guardar(List<Empleado> empleados){
         try(PrintWriter pw = new PrintWriter(new FileWriter(NOMBREARCHIVO))){
             pw.println(",,,,,");
@@ -26,7 +26,7 @@ public class EmpleadoRepositorio implements Repositorio<Empleado> {
 
 
 
-    @Override
+  
     public List<Empleado> cargar() {
         List<Empleado> empleados = new ArrayList<>();
         File archivo = new File(NOMBREARCHIVO);
