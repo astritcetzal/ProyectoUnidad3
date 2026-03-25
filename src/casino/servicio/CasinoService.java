@@ -3,6 +3,8 @@ package servicio;
 import juegos.BlackJack;
 import juegos.JuegoMesa;
 import juegos.Ruleta;
+import persistencia.JugadorRepository;
+import persistencia.Repositorio;
 import persona.Empleado;
 import persona.Jugador;
 import sistema.Casino;
@@ -11,8 +13,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import archivos.JugadorRepository;
-import archivos.Repositorio;
 import exceptions.CedulaEmpleadoDuplicadoException;
 import exceptions.IDJugadorDuplicadoException;
 
