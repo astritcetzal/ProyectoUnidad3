@@ -1,4 +1,5 @@
 package persistencia;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.io.BufferedReader;
@@ -10,46 +11,47 @@ import java.io.PrintWriter;
 import persona.Empleado;
 import repositorio.PersonaRepository;
 
-public class EmpleadoArchivo implements PersonaRepository{
+public class EmpleadoArchivo implements PersonaRepository {
     private String rutaArchivo;
 
-   public EmpleadoArchivo (String rutaArchivo){
-    this.rutaArchivo= rutaArchivo;
-   }
+    public EmpleadoArchivo(String rutaArchivo) {
+        this.rutaArchivo = rutaArchivo;
+    }
+
     @Override
-    public void guardar(List<Empleado> empleados) throws IOException{
-        try(PrintWriter pw = new PrintWriter(new FileWriter(rutaArchivo))){
+    public void guardar(List<Empleado> empleados) throws IOException {
+        try (PrintWriter pw = new PrintWriter(new FileWriter(rutaArchivo))) {
             pw.println("Nombre,Apellido,Cedula,Edad,Cargo,Salario");
-            for (Empleado empl: empleados){
+            for (Empleado empl : empleados) {
                 pw.println(empl.toCSV());
             }
         }
     }
-  
+
     @Override
-    public List<Empleado> cargar() throws IOException{
+    public List<Empleado> cargar() throws IOException {
         List<Empleado> empleados = new ArrayList<>();
         File archivo = new File(rutaArchivo);
-        if (!archivo.exists()){
+        if (!archivo.exists()) {
             return empleados;
         }
-        try(BufferedReader br = new BufferedReader(new FileReader(rutaArchivo))){
+        try (BufferedReader br = new BufferedReader(new FileReader(rutaArchivo))) {
             String linea;
             boolean primeraLinea = true;
-            while ((linea= br.readLine()) != null){
-                if (primeraLinea){
+            while ((linea = br.readLine()) != null) {
+                if (primeraLinea) {
                     primeraLinea = false;
                     continue;
                 }
-                if (!linea.trim().isEmpty()){
+                if (!linea.trim().isEmpty()) {
                     try {
                         empleados.add(Empleado.fromCSV(linea));
-                    } catch(IllegalArgumentException e){
+                    } catch (IllegalArgumentException e) {
                         System.out.println("Linea ignorada: " + e.getMessage());
                     }
                 }
             }
-        } 
+        }
         return empleados;
     }
 }

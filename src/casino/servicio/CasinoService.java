@@ -3,8 +3,6 @@ package servicio;
 import juegos.BlackJack;
 import juegos.JuegoMesa;
 import juegos.Ruleta;
-import persistencia.JugadorRepository;
-import persistencia.Repositorio;
 import persona.Empleado;
 import persona.Jugador;
 import sistema.Casino;
@@ -21,14 +19,11 @@ public class CasinoService {
     private List<Empleado> empleados = new ArrayList<>();
     private List<JuegoMesa> juegos = new ArrayList<>();
     private Casino casino;
-    private Repositorio<Jugador> jugadorRepo;
 
     public CasinoService(Casino casino) {
         if (casino == null)
             throw new IllegalArgumentException("El casino no puede ser nulo");
         this.casino = casino;
-        this.jugadorRepo = new JugadorRepository();
-        this.jugadores = jugadorRepo.cargar();
         for (Jugador j : jugadores)
             casino.registrarJugador(j);
     }
@@ -47,7 +42,6 @@ public class CasinoService {
         }
         jugadores.add(j);
         casino.registrarJugador(j);
-        jugadorRepo.guardar(jugadores);
     }
 
     public Jugador buscarJugador(String id) {
@@ -55,7 +49,7 @@ public class CasinoService {
             if (j.getIdJugador().equals(id)) {
                 return j;
             }
-        throw new IllegalArgumentException("Mo se encontró un jugador con ID: " + id);
+        throw new IllegalArgumentException("No se encontró un jugador con ID: " + id);
     }
 
     public List<Jugador> filtrarPorSaldo(double minimo) {
@@ -82,7 +76,6 @@ public class CasinoService {
             Jugador j = iterator.next();
             if (j.getIdJugador().equals(id)) {
                 iterator.remove();
-                jugadorRepo.guardar(jugadores);
                 return;
             }
         }
