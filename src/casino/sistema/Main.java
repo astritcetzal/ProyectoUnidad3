@@ -1,6 +1,8 @@
 package sistema;
 
+import exceptions.ApuestaInvalidaRuletaException;
 import exceptions.IDJugadorDuplicadoException;
+import exceptions.JuegoInactivoRuletaException;
 import exceptions.SaldoInsuficienteException;
 import juegos.BlackJack;
 import juegos.Ruleta;
@@ -11,10 +13,11 @@ import persona.Persona;
 import servicio.CasinoService;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws JuegoInactivoRuletaException, ApuestaInvalidaRuletaException {
         Casino casino = new Casino("La Cima");
         CasinoService servicio = new CasinoService(casino);
         Persona p1 = new Jugador("Gem", "Martin", "CED-001", 18, 300.0, "JUG-001");
+        Persona p2 = new Jugador("Pucca", "Gaston", "CED-001", 20, 100.000, "JUG-001");
         Persona pVIP = new JugadorVIP("Blair", "Waldorf", "CED-002", 22, 5000.0, "JUG-VIP1", "Oro", 2000.0, 15.0);
         Persona pEmpleado = new Empleado("Carlos", "Gomez", "EMP-001", 35, "Crupier", 1500.0);
 
@@ -29,6 +32,9 @@ public class Main {
 
             servicio.agregarJugador((Jugador) pVIP);
             System.out.println("ÉXITO: Jugador " + pVIP.getNombre() + " agregado al servicio.");
+
+            servicio.agregarJugador((Jugador) p2);
+            System.out.println("ÉXITO: Jugador " + p1.getNombre() + " agregado al servicio.");
 
             System.out.println("\nIntentando agregar un jugador con ID duplicado (JUG-001)...");
             Jugador jDuplicado = new Jugador("Clon", "Falso", "CED-003", 25, 500.0, "JUG-001");
