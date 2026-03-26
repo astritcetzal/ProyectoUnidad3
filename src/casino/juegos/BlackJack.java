@@ -47,7 +47,8 @@ public class BlackJack extends JuegoMesa {
         getJugadorActual();
         this.puntosJugador = 0;
         this.puntosCasa = 0;
-        this.activo = true;
+        boolean activo = true;
+        setActivo(activo);
         prepararMazo();
         System.out.println("¡Mesa lista! Jugador: " + jugador.getNombre());
     }
@@ -67,7 +68,7 @@ public void setPuntosJugador(int puntosJugador) {
 @Override
     public void jugar() {
         try{
-        if (!this.activo) {
+        if (!isActivo()) {
                 throw new JuegoInactivoException(getNombre());
             }
 
