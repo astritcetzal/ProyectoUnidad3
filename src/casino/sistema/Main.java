@@ -98,8 +98,6 @@ public class Main {
             Ruleta ruletaErrorMax = new Ruleta("Ruleta Rota 2", (Jugador)p1, 200.0, 50000.0, true);
         } catch (ApuestaMaximaInvalidaException e) {
             System.out.println("EXCEPCIÓN ATRAPADA: " + e.getMessage());
-        } catch (Exception e) {
-            System.out.println("Otro error: " + e.getMessage());
         }
 
 
@@ -121,5 +119,6 @@ public class Main {
         } catch (IOException e) {
             System.out.println("Error fatal de persistencia: " + e.getMessage());
         }
+    }
 
 }
