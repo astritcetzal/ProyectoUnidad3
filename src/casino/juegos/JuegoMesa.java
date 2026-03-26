@@ -1,6 +1,8 @@
 package juegos;
 
 import exceptions.ApuestaInvalidaRuletaException;
+import exceptions.ApuestaMaximaInvalidaException;
+import exceptions.ApuestaMinimaInvalidaException;
 import exceptions.JuegoInactivoRuletaException;
 import exceptions.SaldoInsuficienteException;
 import interfaces.Jugable;
@@ -14,15 +16,15 @@ public abstract class JuegoMesa implements Jugable {
     protected boolean activo;
 
     // creo que si serian en agregarRuleta y agregarBlackjack las validaciones
-    public JuegoMesa(String nombre, Jugador jugadorActual, double apuestaMinima, double apuestaMaxima, boolean activo) {
+    public JuegoMesa(String nombre, Jugador jugadorActual, double apuestaMinima, double apuestaMaxima, boolean activo) throws ApuestaMaximaInvalidaException, ApuestaMinimaInvalidaException {
         if (nombre == null || nombre.isEmpty())
             throw new IllegalArgumentException("El nombre de la Ruleta no puede estar vacio");
         if (jugadorActual == null)
             throw new IllegalArgumentException("Agregar a un jugador");
         if (apuestaMinima < 100.00)
-            throw new IllegalArgumentException("Apostar minimo 100 pesos");
+            throw new ApuestaMinimaInvalidaException("Apostar minimo 100 pesos");
         if (apuestaMaxima > 35000.00)
-            throw new IllegalArgumentException("No apostar más de 35000");
+            throw new ApuestaMaximaInvalidaException("No apostar más de 35000");
         if (apuestaMinima >= apuestaMaxima)
             throw new IllegalArgumentException("La apuesta mínima no puede ser mayor o igual a la máxima");
 
