@@ -1,4 +1,5 @@
 package juegos;
+import exceptions.SaldoInsuficienteException;
 import interfaces.Jugable;
 import persona.Jugador;
 public abstract class JuegoMesa implements Jugable {
@@ -70,7 +71,7 @@ public abstract class JuegoMesa implements Jugable {
 
     //INTERFACE
     @Override
-    public abstract void iniciar(Jugador j);
+    public abstract void iniciar(Jugador j) throws SaldoInsuficienteException;
 
     @Override
     public abstract void jugar();

@@ -1,6 +1,7 @@
 package sistema;
 
 import exceptions.IDJugadorDuplicadoException;
+import exceptions.SaldoInsuficienteException;
 import juegos.BlackJack;
 import juegos.Ruleta;
 import persona.Empleado;
@@ -64,7 +65,7 @@ public class Main {
             mesaBJ.iniciar((Jugador) pVIP);
             mesaBJ.jugar();
 
-        } catch (IllegalArgumentException | IllegalStateException e) {
+        } catch (IllegalArgumentException | IllegalStateException | SaldoInsuficienteException e) {
             System.out.println("Error en la configuración o ejecución de las mesas: " + e.getMessage());
         }
 
