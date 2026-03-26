@@ -1,5 +1,8 @@
 package sistema;
 
+import java.io.IOException;
+import java.util.List;
+
 import exceptions.ApuestaInvalidaRuletaException;
 import exceptions.IDJugadorDuplicadoException;
 import exceptions.JuegoInactivoRuletaException;
@@ -10,12 +13,13 @@ import persona.Empleado;
 import persona.Jugador;
 import persona.JugadorVIP;
 import persona.Persona;
-import servicio.CasinoService;
+import servicio.EmpleadoService;
+import persistencia.EmpleadoArchivo;
 
 public class Main {
     public static void main(String[] args) throws JuegoInactivoRuletaException, ApuestaInvalidaRuletaException {
         Casino casino = new Casino("La Cima");
-        CasinoService servicio = new CasinoService(casino);
+        EmpleadoService servicio = new EmpleadoService(casino);
         Persona p1 = new Jugador("Gem", "Martin", "CED-001", 18, 300.0, "JUG-001");
         Persona pVIP = new JugadorVIP("Blair", "Waldorf", "CED-002", 22, 5000.0, "JUG-VIP1", "Oro", 2000.0, 15.0);
         Persona pEmpleado = new Empleado("Carlos", "Gomez", "EMP-001", 35, "Crupier", 1500.0);
@@ -78,5 +82,18 @@ public class Main {
 
     }
     // csv
+    try {
+            repoEmpleado.guardar(listaEmpleados);
+            System.out.println("ÉXITO: Empleados guardados correctamente en empleados.csv usando try-with-resources.");
+
+            // Cargar desde archivo
+            List<Empleado> cargados = repoEmpleado.cargar();
+            System.out.println("Datos cargados desde el archivo:");
+            for (Empleado e : cargados) {
+                System.out.println(" -> " + e.getNombre() + " " + e.getApellido() + " - " + e.getCargo());
+            }
+        } catch (IOException e) {
+            System.out.println("Error fatal de persistencia: " + e.getMessage());
+        }
 
 }
