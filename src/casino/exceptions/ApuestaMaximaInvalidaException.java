@@ -1,10 +1,10 @@
 package exceptions;
 
 public class ApuestaMaximaInvalidaException extends Exception {
-    private double apuestaMaxima;
+    private String apuestaMaxima;
 
 
-    public ApuestaMaximaInvalidaException(double apuestaMaxima) {
+    public ApuestaMaximaInvalidaException(String apuestaMaxima) {
         super("La apuesta mínima no puede ser menor que 100.00. Tú apuesta:"+apuestaMaxima);
         this.apuestaMaxima = apuestaMaxima;
     }
