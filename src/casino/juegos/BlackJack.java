@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import exceptions.ApuestaMaximaInvalidaException;
+import exceptions.ApuestaMinimaInvalidaException;
 import exceptions.JuegoInactivoException;
 import exceptions.SaldoInsuficienteException;
 
@@ -13,7 +15,7 @@ public class BlackJack extends JuegoMesa {
     private int puntosCasa;
     private List<Integer> mazo;
 
-    public BlackJack(String nombre, Jugador jugadorActual, double apuestaMinima, double apuestaMaxima, boolean activo) {
+    public BlackJack(String nombre, Jugador jugadorActual, double apuestaMinima, double apuestaMaxima, boolean activo) throws ApuestaMaximaInvalidaException, ApuestaMinimaInvalidaException {
         super(nombre, jugadorActual, apuestaMinima, apuestaMaxima, activo);
         this.mazo = new ArrayList<>();
         prepararMazo();
