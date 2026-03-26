@@ -1,5 +1,4 @@
 package exceptions;
-
 public class ApuestaMinimaInvalidaException extends Exception {
     private String apuestaMinima;
     public ApuestaMinimaInvalidaException(String apuestaMinima) {
