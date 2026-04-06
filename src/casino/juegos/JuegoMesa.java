@@ -104,9 +104,6 @@ public abstract class JuegoMesa implements Jugable {
     @Override
     public abstract void terminar();
 
-    // @Override
-    // public String getNombre(){} //Este siento q está demás
-
     public String toString() {
         return "Jugador: " + nombre + "\n Apuesta mínima: " + apuestaMinima + "  &  Apuesta máxima: " + apuestaMaxima
                 + "\n Estado de juego: " + activo;
