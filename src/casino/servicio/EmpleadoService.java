@@ -1,4 +1,5 @@
 package servicio;
+
 import java.util.List;
 import persona.Empleado;
 import java.io.IOException;
@@ -13,22 +14,25 @@ public class EmpleadoService {
     private PersonaRepository repositorio;
     private List<Empleado> empleados = new ArrayList<>();
 
-    public EmpleadoService (PersonaRepository repositorio)throws IOException {
+    public EmpleadoService(PersonaRepository repositorio) throws IOException {
         this.repositorio = repositorio;
-        this.empleados= repositorio.cargar();
+        this.empleados = repositorio.cargar();
     }
-    public void agregarEmpleado(Empleado empleado) throws CedulaEmpleadoDuplicadoException, IOException{
+
+    public void agregarEmpleado(Empleado empleado) throws CedulaEmpleadoDuplicadoException, IOException {
         if (empleado == null)
             throw new IllegalArgumentException("El empleado no puede ser nulo");
         for (Empleado e : empleados) {
             if (e.getCedula().equals(empleado.getCedula())) {
-                throw new CedulaEmpleadoDuplicadoException( "El empleado con la cédula " + empleado.getCedula() + " ya existe");
+                throw new CedulaEmpleadoDuplicadoException(
+                        "El empleado con la cédula " + empleado.getCedula() + " ya existe");
             }
         }
         empleados.add(empleado);
         repositorio.guardar(empleados);
 
     }
+
     public Empleado buscarEmpleado(String cedula) {
         for (Empleado e : empleados)
             if (e.getCedula().equals(cedula)) {
@@ -46,6 +50,7 @@ public class EmpleadoService {
             }
         return resultado;
     }
+
     public void eliminarEmpleado(String cedula) throws IOException {
         Iterator<Empleado> iterator = empleados.iterator();
         while (iterator.hasNext()) {
@@ -57,10 +62,4 @@ public class EmpleadoService {
         }
         repositorio.guardar(empleados);
     }
-    public BlackJack agregarBlackJack(String string, String string2, double d, double e) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'agregarBlackJack'");
-    }
-
-
 }

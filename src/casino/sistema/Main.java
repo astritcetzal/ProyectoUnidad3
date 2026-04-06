@@ -19,7 +19,8 @@ import servicio.EmpleadoService;
 import persistencia.EmpleadoArchivo;
 
 public class Main {
-    public static void main(String[] args) throws JuegoInactivoRuletaException, ApuestaInvalidaRuletaException, IOException {
+    public static void main(String[] args)
+            throws JuegoInactivoRuletaException, ApuestaInvalidaRuletaException, IOException {
         Casino casino = new Casino("La Cima");
         EmpleadoArchivo repoEmpleado = new EmpleadoArchivo("empleados.csv");
         EmpleadoService servicio = new EmpleadoService(repoEmpleado);
@@ -37,7 +38,6 @@ public class Main {
 
         casino.registrarJugador((Jugador) pVIP);
         System.out.println("ÉXITO: Jugador " + pVIP.getNombre() + " agregado al casino.");
-
 
         try {
             // Creando juegos a través del servicio (Apuesta mínima de 150 y 200 para pasar
@@ -61,37 +61,37 @@ public class Main {
             mesaBJ.iniciar((Jugador) pVIP);
             mesaBJ.jugar();
 
-        } catch (IllegalArgumentException | IllegalStateException | SaldoInsuficienteException | ApuestaInvalidaRuletaException | ApuestaMaximaInvalidaException | ApuestaMinimaInvalidaException e) {
+        } catch (IllegalArgumentException | IllegalStateException | SaldoInsuficienteException
+                | ApuestaInvalidaRuletaException | ApuestaMaximaInvalidaException | ApuestaMinimaInvalidaException e) {
             System.out.println("Error en la configuración o ejecución de las mesas: " + e.getMessage());
         }
 
         JugadorVIP vipReal = (JugadorVIP) pVIP;
         System.out.println("Saldo de " + vipReal.getNombre() + " antes del bonus: $" + vipReal.getSaldo());
         vipReal.aplicarBonus();
-    
-    //Pruebas de errores
-    System.out.println("===== Purebas de excepciones: =====");
-    System.out.println("\nApuesta menor a 100");
-    try{
-        Ruleta ruletabad = new Ruleta("Ruleta azul", (Jugador) p1, 50.0, 500.0, true);
-    } catch (ApuestaMaximaInvalidaException | ApuestaMinimaInvalidaException e) {
+
+        // Pruebas de errores
+        System.out.println("===== Purebas de excepciones: =====");
+        System.out.println("\nApuesta menor a 100");
+        try {
+            Ruleta ruletabad = new Ruleta("Ruleta azul", (Jugador) p1, 50.0, 500.0, true);
+        } catch (ApuestaMaximaInvalidaException | ApuestaMinimaInvalidaException e) {
             System.out.println("EXCEPCIÓN ATRAPADA: " + e.getMessage());
 
-    }
+        }
 
-    System.out.println("\nApuesta mayor a 35000");
+        System.out.println("\nApuesta mayor a 35000");
         try {
-            Ruleta ruletaErrorMax = new Ruleta("Ruleta Rota 2", (Jugador)p1, 200.0, 50000.0, true);
+            Ruleta ruletaErrorMax = new Ruleta("Ruleta Rota 2", (Jugador) p1, 200.0, 50000.0, true);
         } catch (ApuestaMaximaInvalidaException | ApuestaMinimaInvalidaException e) {
             System.out.println("EXCEPCIÓN ATRAPADA: " + e.getMessage());
         }
 
-
-    // csv
+        // csv
 
         List<Empleado> listaEmpleados = new ArrayList<>();
         listaEmpleados.add((Empleado) pEmpleado);
-    try {
+        try {
             repoEmpleado.guardar(listaEmpleados);
             System.out.println("ÉXITO: Empleados guardados correctamente en empleados.csv usando try-with-resources.");
 
