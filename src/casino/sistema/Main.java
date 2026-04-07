@@ -23,7 +23,7 @@ public class Main {
     public static void main(String[] args)
             throws JuegoInactivoRuletaException, ApuestaInvalidaRuletaException, IOException {
         Casino casino = new Casino("La Cima");
-        PersonaRepository repoEmpleado = new EmpleadoArchivo("empleadoarchivo.csv");
+        PersonaRepository servicio = new EmpleadoArchivo("empleadoarchivo.csv");
         EmpleadoService empleado = new EmpleadoService(servicio);
         Persona p1 = new Jugador("Gem", "Martin", "CED-001", 18, 300.0, "JUG-001");
         Persona pVIP = new JugadorVIP("Blair", "Waldorf", "CED-002", 22, 5000.0, "JUG-VIP1", "Oro", 2000.0, 15.0);
