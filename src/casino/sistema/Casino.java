@@ -70,9 +70,6 @@ public class Casino {
         return "Casino: " + nombre + "- Caja: $" + cajaTotal;
     }
 
-    public static Ruleta agregarRuleta(String string, String string2, double d, double e) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'agregarRuleta'");
-    }
+    
 
 }
