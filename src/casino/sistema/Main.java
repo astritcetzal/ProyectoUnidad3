@@ -15,15 +15,16 @@ import persona.Empleado;
 import persona.Jugador;
 import persona.JugadorVIP;
 import persona.Persona;
+import repositorio.PersonaRepository;
 import servicio.EmpleadoService;
 import persistencia.EmpleadoArchivo;
 
-public class Main {
+public class Main { 
     public static void main(String[] args)
             throws JuegoInactivoRuletaException, ApuestaInvalidaRuletaException, IOException {
         Casino casino = new Casino("La Cima");
-        EmpleadoArchivo repoEmpleado = new EmpleadoArchivo("empleados.csv");
-        EmpleadoService servicio = new EmpleadoService(repoEmpleado);
+        PersonaRepository repoEmpleado = new EmpleadoArchivo("empleadoarchivo.csv");
+        EmpleadoService empleado = new EmpleadoService(servicio);
         Persona p1 = new Jugador("Gem", "Martin", "CED-001", 18, 300.0, "JUG-001");
         Persona pVIP = new JugadorVIP("Blair", "Waldorf", "CED-002", 22, 5000.0, "JUG-VIP1", "Oro", 2000.0, 15.0);
         Persona pEmpleado = new Empleado("Carlos", "Gomez", "EMP-001", 35, "Crupier", 1500.0);
