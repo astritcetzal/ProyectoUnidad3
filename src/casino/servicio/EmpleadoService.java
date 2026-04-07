@@ -56,10 +56,12 @@ public class EmpleadoService {
         while (iterator.hasNext()) {
             Empleado e = iterator.next();
             if (e.getCedula().equals(cedula)) {
-                iterator.remove();
-                return;
+                System.out.println("Eliminar empleado: " + e.getNombre() + " con cedula: " + e.getCedula());
+                iterator.remove();   
+                repositorio.guardar(empleados);
+                return;         
             }
         }
-        repositorio.guardar(empleados);
+        
     }
 }

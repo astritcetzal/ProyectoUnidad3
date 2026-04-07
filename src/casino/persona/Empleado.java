@@ -57,7 +57,7 @@ public class Empleado extends Persona {
     public String toCSV(){
         //(String nombre, String apellido, String cedula, int edad, String cargo, double salario) 
         StringBuilder sb = new StringBuilder();
-        sb.append(getNombre()).append(",").append(getCedula()).append(",").append(getEdad()).append(",").append(getCargo()).append(",").append(getSalario());
+        sb.append(getNombre()).append(",").append(getApellido()).append(",").append(getCedula()).append(",").append(getEdad()).append(",").append(getCargo()).append(",").append(getSalario());
         return sb.toString();
     }
     public static Empleado fromCSV(String linea){
@@ -68,11 +68,11 @@ public class Empleado extends Persona {
    
         try {
         int edadParseada = Integer.parseInt(partes[3]);
-        double salarioedadParseada = Double.parseDouble(partes[3]);
+        double salarioedadParseada = Double.parseDouble(partes[5]);
         Empleado empl = new Empleado(partes[0], partes[1], partes[2], edadParseada, partes[4], salarioedadParseada );
         return empl;
         } catch (NumberFormatException e){
-            System.out.println("Error al leer los datos de mascota: " + e.getMessage());
+            System.out.println("Error al leer los datos del empleado " + e.getMessage());
             throw new IllegalArgumentException();
         }
     }
