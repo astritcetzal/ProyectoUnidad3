@@ -29,7 +29,7 @@ public class Main {
         Persona pVIP = new JugadorVIP("Blair", "Waldorf", "CED-002", 22, 5000.0, "JUG-VIP1", "Oro", 2000.0, 15.0);
         Persona pEmpleado = new Empleado("Carlos", "Gomez", "EMP-001", 35, "Crupier", 1500.0);
 
-        System.out.println("Personas creadas exitosamente en memoria.");
+        System.out.println("\n----- Personas creadas exitosamente en memoria -----\n");
         System.out.println(p1.getNombre() + " es: " + p1.getRol());
         System.out.println(pVIP.getNombre() + " es: " + pVIP.getRol());
         System.out.println(pEmpleado.getNombre() + " es: " + pEmpleado.getRol());
@@ -93,18 +93,18 @@ public class Main {
         List<Empleado> listaEmpleados = new ArrayList<>();
         listaEmpleados.add((Empleado) pEmpleado);
         try {
-            empleado.guardar(listaEmpleados);
+            servicio.guardar(listaEmpleados);
             System.out.println("ÉXITO: Empleados guardados correctamente en empleados.csv usando try-with-resources.");
 
             // Cargar desde archivo
-            List<Empleado> cargados = empleado.cargar();
+            List<Empleado> cargados = servicio.cargar();
             System.out.println("Datos cargados desde el archivo:");
             for (Empleado e : cargados) {
                 System.out.println(" -> " + e.getNombre() + " " + e.getApellido() + " - " + e.getCargo());
             }
         } catch (IOException e) {
             System.out.println("Error fatal de persistencia: " + e.getMessage());
-        }
+        } 
     }
 
 }
