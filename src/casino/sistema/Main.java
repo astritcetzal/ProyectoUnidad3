@@ -63,7 +63,7 @@ public class Main {
             mesaBJ.jugar();
 
         } catch (IllegalArgumentException | IllegalStateException | SaldoInsuficienteException
-                | ApuestaInvalidaRuletaException | ApuestaMaximaInvalidaException | ApuestaMinimaInvalidaException e) {
+                | ApuestaInvalidaRuletaException | ApuestaMaximaInvalidaException | ApuestaMinimaInvalidaException | JuegoInactivoRuletaException e) {
             System.out.println("Error en la configuración o ejecución de las mesas: " + e.getMessage());
         }
 
@@ -93,11 +93,11 @@ public class Main {
         List<Empleado> listaEmpleados = new ArrayList<>();
         listaEmpleados.add((Empleado) pEmpleado);
         try {
-            repoEmpleado.guardar(listaEmpleados);
+            empleado.guardar(listaEmpleados);
             System.out.println("ÉXITO: Empleados guardados correctamente en empleados.csv usando try-with-resources.");
 
             // Cargar desde archivo
-            List<Empleado> cargados = repoEmpleado.cargar();
+            List<Empleado> cargados = empleado.cargar();
             System.out.println("Datos cargados desde el archivo:");
             for (Empleado e : cargados) {
                 System.out.println(" -> " + e.getNombre() + " " + e.getApellido() + " - " + e.getCargo());
