@@ -29,10 +29,13 @@ public class Main {
         Persona pVIP = new JugadorVIP("Blair", "Waldorf", "CED-002", 22, 5000.0, "JUG-VIP1", "Oro", 2000.0, 15.0);
         Persona pEmpleado = new Empleado("Carlos", "Gomez", "EMP-001", 35, "Crupier", 1500.0);
 
+        //----------------------------------------------------------------------------------------------------EMPLEADO Y JUGADORES
         System.out.println("\n----- Personas creadas exitosamente en memoria -----\n");
         System.out.println(p1.getNombre() + " es: " + p1.getRol());
         System.out.println(pVIP.getNombre() + " es: " + pVIP.getRol());
         System.out.println(pEmpleado.getNombre() + " es: " + pEmpleado.getRol());
+
+        System.out.println("\n----- Personas guardadas en " + casino.getNombre() + " -----\n");
 
         casino.registrarJugador((Jugador) p1);
         System.out.println("ÉXITO: Jugador " + p1.getNombre() + " agregado al casino.");
@@ -40,6 +43,10 @@ public class Main {
         casino.registrarJugador((Jugador) pVIP);
         System.out.println("ÉXITO: Jugador " + pVIP.getNombre() + " agregado al casino.");
 
+        casino.agregarEmpleado((Empleado) pEmpleado);
+        System.out.println("ÉXITO: Empleado " + pEmpleado.getNombre() + " agregado al casino.");
+
+        //----------------------------------------------------------------------------------------------------CREACIÓN DE JUEGOS
         try {
             // Creando juegos a través del servicio (Apuesta mínima de 150 y 200 para pasar
             // la validación de >100)
