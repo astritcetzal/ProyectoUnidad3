@@ -8,6 +8,7 @@ import exceptions.ApuestaInvalidaRuletaException;
 import exceptions.JuegoInactivoRuletaException;
 import exceptions.SaldoInsuficienteException;
 import exceptions.ApuestaMinimaInvalidaException;
+import exceptions.JuegoInactivoException;
 import exceptions.ApuestaMaximaInvalidaException;
 import juegos.BlackJack;
 import juegos.Ruleta;
@@ -29,6 +30,7 @@ public class Main {
         EmpleadoService empleado = new EmpleadoService(servicio);
         JugadorRepository repoJugador = new JugadorArchivo("jugadorers.csv");
         JugadorService  jugadorService = new JugadorService(repoJugador);
+
         Jugador p1 = new Jugador("Gem", "Martin", "CED-001", 18, 300.0, "JUG-001");
         JugadorVIP pVIP = new JugadorVIP("Blair", "Waldorf", "CED-002", 22, 5000.0, "JUG-VIP1", "Oro", 2000.0, 15.0);
         Empleado pEmpleado = new Empleado("Carlos", "Gomez", "EMP-001", 35, "Crupier", 1500.0);
@@ -67,9 +69,8 @@ public class Main {
             System.out.println(p1.getNombre() + " apuesta $" + montoApostar + " al Rojo, número 15.");
             mesaRuleta.setApuesta(15, "Rojo", montoApostar);
 
-            Empleado empleadoReal = (Empleado) pEmpleado;
-            empleadoReal.setMesaAsignada(mesaRuleta); 
-            empleadoReal.supervisarMesa();
+            pEmpleado.setMesaAsignada(mesaRuleta); 
+            pEmpleado.supervisarMesa();
 
             mesaRuleta.jugar();
             mesaRuleta.terminar();
@@ -80,7 +81,7 @@ public class Main {
             mesaBJ.jugar();
 
         } catch (IllegalArgumentException | IllegalStateException | SaldoInsuficienteException
-                | ApuestaInvalidaRuletaException | ApuestaMaximaInvalidaException | ApuestaMinimaInvalidaException | JuegoInactivoRuletaException e) {
+                | ApuestaInvalidaRuletaException | ApuestaMaximaInvalidaException | ApuestaMinimaInvalidaException | JuegoInactivoRuletaException | JuegoInactivoException e) {
             System.out.println("Error en la configuración o ejecución de las mesas: " + e.getMessage());
         }
 
@@ -88,7 +89,7 @@ public class Main {
         System.out.println("Saldo de " + vipReal.getNombre() + " antes del bonus: $" + vipReal.getSaldo());
         vipReal.aplicarBonus();
 
-        // Pruebas de errores
+        //----------------------------------------------------------------------------------------------------PRUEBAS DE ERRORES
         System.out.println("===== Purebas de excepciones: =====");
         System.out.println("\nApuesta menor a 100");
         try {
@@ -105,8 +106,7 @@ public class Main {
             System.out.println("EXCEPCIÓN ATRAPADA: " + e.getMessage());
         }
 
-        // csv
-
+        //----------------------------------------------------------------------------------------------------GUARDAR EN CSV
         List<Empleado> listaEmpleados = new ArrayList<>();
         listaEmpleados.add((Empleado) pEmpleado);
         try {
