@@ -1,7 +1,6 @@
 package sistema;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import exceptions.ApuestaInvalidaRuletaException;
@@ -17,7 +16,6 @@ import juegos.Ruleta;
 import persona.Empleado;
 import persona.Jugador;
 import persona.JugadorVIP;
-import persona.Persona;
 import repositorio.JugadorRepository;
 import repositorio.PersonaRepository;
 import servicio.EmpleadoService;
@@ -92,7 +90,7 @@ public class Main {
         vipReal.aplicarBonus();
 
         //----------------------------------------------------------------------------------------------------PRUEBAS DE ERRORES
-        System.out.println("\\n===== Pruebas de excepciones: =====");
+        System.out.println("\n===== Pruebas de excepciones: =====");
         System.out.println("\nApuesta menor a 100");
         try {
             Ruleta ruletabad = new Ruleta("Ruleta azul", (Jugador) p1, 50.0, 500.0, true);
