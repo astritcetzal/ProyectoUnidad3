@@ -45,13 +45,13 @@ public class Main {
 
         System.out.println("\n----- Personas guardadas en " + casino.getNombre() + " -----\n");
 
-        casino.registrarJugador((Jugador) p1);
+        casino.registrarJugador(p1);
         System.out.println("ÉXITO: Jugador " + p1.getNombre() + " agregado al casino.");
 
-        casino.registrarJugador((Jugador) pVIP);
+        casino.registrarJugador(pVIP);
         System.out.println("ÉXITO: Jugador " + pVIP.getNombre() + " agregado al casino.");
 
-        casino.agregarEmpleado((Empleado) pEmpleado);
+        casino.agregarEmpleado(pEmpleado);
         System.out.println("ÉXITO: Empleado " + pEmpleado.getNombre() + " agregado al casino.");
 
         System.out.println("\n--------------------------------------------------");
@@ -92,7 +92,7 @@ public class Main {
         vipReal.aplicarBonus();
 
         //----------------------------------------------------------------------------------------------------PRUEBAS DE ERRORES
-        System.out.println("===== Purebas de excepciones: =====");
+        System.out.println("\\n===== Pruebas de excepciones: =====");
         System.out.println("\nApuesta menor a 100");
         try {
             Ruleta ruletabad = new Ruleta("Ruleta azul", (Jugador) p1, 50.0, 500.0, true);
@@ -107,6 +107,7 @@ public class Main {
         } catch (ApuestaMaximaInvalidaException | ApuestaMinimaInvalidaException e) {
             System.out.println("EXCEPCIÓN ATRAPADA: " + e.getMessage());
         }
+
         //----------------------------------------------------------------------------------------------------SERVICIO Y PERSISTENCIA 
         System.out.println("\n===== Pruebas de servicio y persistencia: =====");
         try{
@@ -124,20 +125,6 @@ public class Main {
             System.out.println("Jugadores VIP que están registrados en el servicio: ");
             for (Jugador v:vips){System.out.println(" ==>  " + v.getNombre() + ", " + v.getApellido());}
 
-            //----------------------------------------------------------------------------------------------------GUARDAR EN CSV
-
-            /*List<Empleado> listaEmpleados = new ArrayList<>();
-            listaEmpleados.add((Empleado) pEmpleado);
-            try {
-                servicio.guardar(listaEmpleados);
-                System.out.println("ÉXITO: Empleados guardados correctamente en empleados.csv usando try-with-resources.");
-
-                // Cargar desde archivo
-                List<Empleado> cargados = servicio.cargar();
-                System.out.println("Datos cargados desde el archivo:");
-                for (Empleado e : cargados) {
-                    System.out.println(" -> " + e.getNombre() + " " + e.getApellido() + " - " + e.getCargo());
-                } */
             } catch (CedulaEmpleadoDuplicadoException | IDJugadorDuplicadoException | IOException e) {
                 System.out.println("Error fatal de persistencia: " + e.getMessage());
             } 
