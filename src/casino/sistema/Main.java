@@ -20,14 +20,13 @@ import servicio.EmpleadoService;
 import persistencia.EmpleadoArchivo;
 
 public class Main { 
-    public static void main(String[] args)
-            throws JuegoInactivoRuletaException, ApuestaInvalidaRuletaException, IOException {
+    public static void main(String[] args) throws IOException {
         Casino casino = new Casino("La Cima");
         PersonaRepository servicio = new EmpleadoArchivo("empleadoarchivo.csv");
         EmpleadoService empleado = new EmpleadoService(servicio);
-        Persona p1 = new Jugador("Gem", "Martin", "CED-001", 18, 300.0, "JUG-001");
-        Persona pVIP = new JugadorVIP("Blair", "Waldorf", "CED-002", 22, 5000.0, "JUG-VIP1", "Oro", 2000.0, 15.0);
-        Persona pEmpleado = new Empleado("Carlos", "Gomez", "EMP-001", 35, "Crupier", 1500.0);
+        Jugador p1 = new Jugador("Gem", "Martin", "CED-001", 18, 300.0, "JUG-001");
+        JugadorVIP pVIP = new JugadorVIP("Blair", "Waldorf", "CED-002", 22, 5000.0, "JUG-VIP1", "Oro", 2000.0, 15.0);
+        Empleado pEmpleado = new Empleado("Carlos", "Gomez", "EMP-001", 35, "Crupier", 1500.0);
 
         //----------------------------------------------------------------------------------------------------EMPLEADO Y JUGADORES
         System.out.println("\n----- Personas creadas exitosamente en memoria -----\n");
@@ -60,7 +59,7 @@ public class Main {
             mesaRuleta.iniciar((Jugador) p1);
 
             double montoApostar = 200.0;
-            System.out.println(p1.getNombre() + " apuesta $" + montoApostar + " al Rojo, número 15.\n");
+            System.out.println(p1.getNombre() + " apuesta $" + montoApostar + " al Rojo, número 15.");
             mesaRuleta.setApuesta(15, "Rojo", montoApostar);
 
             Empleado empleadoReal = (Empleado) pEmpleado;
