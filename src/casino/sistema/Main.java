@@ -28,7 +28,7 @@ public class Main {
         Casino casino = new Casino("La Cima");
         PersonaRepository servicio = new EmpleadoArchivo("empleadoarchivo.csv");
         EmpleadoService empleado = new EmpleadoService(servicio);
-        JugadorRepository repoJugador = new JugadorArchivo("jugadorers.csv");
+        JugadorRepository repoJugador = new JugadorArchivo("jugadores.csv");
         JugadorService  jugadorService = new JugadorService(repoJugador);
 
         Jugador p1 = new Jugador("Gem", "Martin", "CED-001", 18, 300.0, "JUG-001");
@@ -58,12 +58,12 @@ public class Main {
         try {
             // Creando juegos a través del servicio (Apuesta mínima de 150 y 200 para pasar
             // la validación de >100)
-            Ruleta mesaRuleta = casino.agregarRuleta("Ruleta Europea", (Jugador) p1, 150.0, 2000.0, true);
-            BlackJack mesaBJ = casino.agregarBlackJack("BlackJack Clásico", (Jugador) pVIP, 200.0, 5000.0, true);
+            Ruleta mesaRuleta = casino.agregarRuleta("Ruleta Europea", p1, 150.0, 2000.0, true);
+            BlackJack mesaBJ = casino.agregarBlackJack("BlackJack Clásico", pVIP, 200.0, 5000.0, true);
 
             // --- JUGANDO RULETA ---
             System.out.println("\n>>> SIMULANDO PARTIDA DE RULETA <<<");
-            mesaRuleta.iniciar((Jugador) p1);
+            mesaRuleta.iniciar(p1);
 
             double montoApostar = 200.0;
             System.out.println(p1.getNombre() + " apuesta $" + montoApostar + " al Rojo, número 15.");
