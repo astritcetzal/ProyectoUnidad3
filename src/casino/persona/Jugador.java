@@ -82,15 +82,21 @@ public class Jugador extends Persona implements Apostable {
     }
 
     public String toCSV() {
-        return getNombre() + "," + getApellido() + "," +
-           getCedula() + "," + getEdad() + "," + getSaldo() + "," + getIdJugador();
+    return new StringBuilder()
+        .append(getNombre()).append(",")
+        .append(getApellido()).append(",")
+        .append(getCedula()).append(",")
+        .append(getEdad()).append(",")
+        .append(getSaldo()).append(",")
+        .append(getIdJugador())
+        .toString();
     }
 
     public static Jugador fromCSV(String linea) {
         String[] p = linea.split(",");
-        if (p.length < 7) throw new IllegalArgumentException("Línea CSV inválida: " + linea);
-        return new Jugador(p[1], p[2], p[3], Integer.parseInt(p[4].trim()),
-                           Double.parseDouble(p[5].trim()), p[0]);
+        if (p.length < 6) throw new IllegalArgumentException("Línea CSV inválida: " + linea);
+        return new Jugador(p[0], p[1], p[2], Integer.parseInt(p[3].trim()),
+                            Double.parseDouble(p[4].trim()), p[5]);
     }
 
 }
