@@ -42,8 +42,9 @@ public class BlackJack extends JuegoMesa {
         if (jugador == null) {
             return; 
         }
+        
         if (jugador.getSaldo() < getApuestaMinima()) {
-            throw new IllegalStateException("El jugador no tiene saldo suficiente para la apuesta mínima de esta mesa.");
+            throw new SaldoInsuficienteException(jugador.getSaldo(), getApuestaMinima());
         }
 
         getJugadorActual();
@@ -55,7 +56,7 @@ public class BlackJack extends JuegoMesa {
         System.out.println("¡Mesa lista! Jugador: " + jugador.getNombre());
     }
 
-public void setPuntosJugador(int puntosJugador) {
+    public void setPuntosJugador(int puntosJugador) {
         this.puntosJugador = puntosJugador;
     }
 
@@ -67,41 +68,47 @@ public void setPuntosJugador(int puntosJugador) {
         this.mazo = mazo;
     }
 
-@Override
+    @Override
     public void jugar() {
-        try{
-        if (!isActivo()) {
+        try {
+            if (!isActivo()) {
                 throw new JuegoInactivoException(getNombre());
             }
 
-        if (getJugadorActual() == null) {
-            System.out.println("Error: No hay un jugador asignado a la mesa.");
-        }
-
-        double montoSimulado = getApuestaMinima(); 
-        
-        if (!validarApuesta(montoSimulado)) {
-            throw new IllegalArgumentException("La apuesta no es válida para los límites de esta mesa.");
-        }
-
-        repartirCartas();
-
-        while (this.puntosJugador < 17) {
-            this.puntosJugador += sacarCarta();
-        }
-
-        if (this.puntosJugador <= 21) {
-            while (this.puntosCasa < 17) {
-                this.puntosCasa += sacarCarta();
+            if (getJugadorActual() == null) {
+                System.out.println("Error: No hay un jugador asignado a la mesa.");
             }
-        }
-        terminar();
-        } catch (JuegoInactivoException e) {
-            System.err.println("Error de estado: " + e.getMessage());
-        } catch (Exception e) {
-            System.err.println("Error inesperado: " + e.getMessage());
-        }
+
+            double montoSimulado = getApuestaMinima(); 
+            
+            if (!validarApuesta(montoSimulado)) {
+                throw new ApuestaMinimaInvalidaException("La apuesta de " + montoSimulado + " no es válida para esta mesa.");
+            }
+
+            repartirCartas();
+
+            while (this.puntosJugador < 17) {
+                this.puntosJugador += sacarCarta();
+            }
+
+            if (this.puntosJugador <= 21) {
+                while (this.puntosCasa < 17) {
+                    this.puntosCasa += sacarCarta();
+                }
+            }
+            terminar();
+            
+            } catch (JuegoInactivoException e) {
+                System.out.println("Error de estado: " + e.getMessage());
+            
+            } catch (ApuestaMinimaInvalidaException e) {
+                System.out.println("Error de apuesta: " + e.getMessage());
+            
+            } catch (IllegalStateException e) {
+                System.out.println("Error de lógica: " + e.getMessage());
+            }
     }
+    
     @Override
     public void terminar() {
         isActivo();
@@ -131,11 +138,12 @@ public void setPuntosJugador(int puntosJugador) {
     public int getPuntosJugador() {
         return puntosJugador; 
     }
+    
     public int getPuntosCasa() {
         return puntosCasa; 
     }
 
-    public List<Integer>getMazo(){
+    public List<Integer> getMazo(){
         return mazo; 
     }
 }
