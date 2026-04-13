@@ -4,7 +4,6 @@ import juegos.BlackJack;
 import juegos.JuegoMesa;
 import juegos.Ruleta;
 import persona.Jugador;
-import persona.Empleado;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,8 +12,6 @@ import exceptions.ApuestaMinimaInvalidaException;
 
 public class Casino {
     private String nombre;
-    private List<Jugador> jugadores; // agregación
-    private List<Empleado> empleados; // agregación
     private List<JuegoMesa> juegos; // composición
     private double cajaTotal;
 
@@ -22,29 +19,7 @@ public class Casino {
         if (nombre == null || nombre.isEmpty())
             throw new IllegalArgumentException("El nombre no puede estar vacío");
         this.nombre = nombre;
-        this.jugadores = new ArrayList<>();
-        this.empleados = new ArrayList<>();
         this.juegos = new ArrayList<>();
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public double getCajaTotal() {
-        return cajaTotal;
-    }
-
-    public void setCajaTotal(double caja) {
-        this.cajaTotal = caja;
-    }
-
-    public void registrarJugador(Jugador j) {
-        jugadores.add(j);
-    }
-
-    public void agregarEmpleado(Empleado e) {
-        empleados.add(e);
     }
 
     // composición
@@ -65,11 +40,20 @@ public class Casino {
         return nuevoBlackJack;
     }
 
-    @Override
-    public String toString() {
-        return "Casino: " + nombre + "- Caja: $" + cajaTotal;
+    public String getNombre() {
+        return nombre;
     }
 
-    
+    public double getCajaTotal() {
+        return cajaTotal;
+    }
+
+    public void setCajaTotal(double caja) {
+        this.cajaTotal = caja;
+    }
+
+    public String toString() {
+        return "Casino: " + getNombre() + "- Caja: $" + getCajaTotal();
+    }
 
 }

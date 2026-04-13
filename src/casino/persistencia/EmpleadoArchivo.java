@@ -31,13 +31,14 @@ public class EmpleadoArchivo implements PersonaRepository {
     @Override
     public List<Empleado> cargar() throws IOException {
         List<Empleado> empleados = new ArrayList<>();
-        File archivo = new File(rutaArchivo);
-        if (!archivo.exists()) {
-            return empleados;
-        }
-        try (BufferedReader br = new BufferedReader(new FileReader(rutaArchivo))) {
+        File archivo = new File("empleados.csv");
+
+        if (!archivo.exists()) { return empleados; }
+
+        try (BufferedReader br = new BufferedReader(new FileReader(archivo))) {
             String linea;
             boolean primeraLinea = true;
+
             while ((linea = br.readLine()) != null) {
                 if (primeraLinea) {
                     primeraLinea = false;
