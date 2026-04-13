@@ -44,7 +44,7 @@ public class BlackJack extends JuegoMesa {
         }
         
         if (jugador.getSaldo() < getApuestaMinima()) {
-            throw new SaldoInsuficienteException("El jugador no tiene saldo suficiente para la apuesta mínima de esta mesa.");
+            throw new SaldoInsuficienteException(jugador.getSaldo(), getApuestaMinima());
         }
 
         getJugadorActual();
