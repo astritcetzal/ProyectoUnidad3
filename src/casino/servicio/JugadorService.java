@@ -74,9 +74,4 @@ public class JugadorService {
         throw new IllegalArgumentException("No se encontró un jugador con ID: " + id);
     }
 
-    public void agregarJugador(String nombre, String apellido, String string, int i, String id, int j) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'agregarJugador'");
-    }
-
 }

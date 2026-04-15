@@ -31,7 +31,7 @@ public class Main {
 
         try{
             EmpleadoService empleadoService = new EmpleadoService(new EmpleadoArchivo("empleados.csv"));
-            JugadorService jugadorService = new JugadorService(new JugadorArchivo("jugadores.cvs"));
+            JugadorService jugadorService = new JugadorService(new JugadorArchivo("jugadores.csv"));
 
             int opcion;
             do{
@@ -50,20 +50,26 @@ public class Main {
                     case 1:
                         System.out.println("Nombre: "); String nomJ = sc.nextLine();
                         System.out.println("Apellido: "); String apeJ = sc.nextLine();
+                        System.out.println("Edad: "); int edadJ = sc.nextInt(); sc.nextLine();
                         System.out.println("Cedula (ej. CED-001): "); String cedJ = sc.nextLine();
                         System.out.println("ID jugador (ej. JUG-001): "); String id = sc.nextLine();
+                        System.out.println("Saldo con el que inicia: "); double saldo = sc.nextDouble(); sc.nextLine();
                         
-                        jugadorService.agregarJugador(nomJ, apeJ, cedJ, 30, id, 1000);
+                        Jugador nuevoJugador = new Jugador(nomJ, apeJ, cedJ, edadJ, saldo, id);
+                        jugadorService.agregarJugador(nuevoJugador);
                         System.out.println("El jugador se registró correctamente!");
                         break;
 
                     case 2:
                         System.out.println("Nombre: "); String nomE = sc.nextLine();
                         System.out.println("Apellido: "); String apeE = sc.nextLine();
+                        System.out.println("Edad: "); int edadE = sc.nextInt(); sc.nextLine();
                         System.out.println("Cédula (ej. EMP-001): "); String cedE = sc.nextLine();
                         System.out.println("Cargo: "); String cargo = sc.nextLine();
+                        System.out.println("Salario: "); double salario= sc.nextDouble(); sc.nextLine();
                         
-                        empleadoService.agregarEmpleado(nomE, apeE, cedE, 25, cargo);
+                        Empleado nuevoEmpleado = new Empleado(nomE, apeE, cedE, edadE, cargo, salario);
+                        empleadoService.agregarEmpleado(nuevoEmpleado);
                         System.out.println("El empleado se registró en el sistema");
                         break; 
 
@@ -74,13 +80,23 @@ public class Main {
                         break;
 
                     case 4:
-                    
+                        List <Jugador> vips = jugadorService.filtrarVIP();
+                        System.out.println("----- Jugadores Vip -----");
+                        vips.forEach(v -> System.out.println(v.getNombre()));
+                        break;
 
                     case 5:
+                        System.out.println("Cédula de empleado para elmininar: "); String ceeliminar = sc.nextLine();
+                        empleadoService.eliminarEmpleado(ceeliminar);
+                        System.out.println("El empleado fue eliminado del sistema.");
+                        break;
 
                     case 6:
+                        System.out.println("Cerrando el sistema ...");
+                        break;
 
                     default:
+                        System.out.println("Opción invalida, intenta otra vez!");
     
                 }
 
