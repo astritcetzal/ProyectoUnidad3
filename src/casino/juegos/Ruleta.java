@@ -6,7 +6,6 @@ import exceptions.ApuestaMinimaInvalidaException;
 import exceptions.JuegoInactivoRuletaException;
 import modelo.Jugador;
 import exceptions.SaldoInsuficienteException;
-import modelo.Jugador;
 
 public class Ruleta extends JuegoMesa {
 
