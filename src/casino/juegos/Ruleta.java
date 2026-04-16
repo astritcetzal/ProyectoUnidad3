@@ -4,6 +4,7 @@ import exceptions.ApuestaInvalidaRuletaException;
 import exceptions.ApuestaMaximaInvalidaException;
 import exceptions.ApuestaMinimaInvalidaException;
 import exceptions.JuegoInactivoRuletaException;
+import exceptions.SaldoInsuficienteException;
 import persona.Jugador;
 
 public class Ruleta extends JuegoMesa {
@@ -53,10 +54,14 @@ public class Ruleta extends JuegoMesa {
     }
 
     @Override
-    public void iniciar(Jugador j) {
+    public void iniciar(Jugador j) throws SaldoInsuficienteException {
         if (j == null) {
             throw new IllegalArgumentException("No se puede iniciar la Ruleta sin un jugador");
         }
+        if (j.getSaldo() < getApuestaMinima()) {
+            throw new SaldoInsuficienteException(j.getSaldo(), getApuestaMinima());
+        }
+
         setJugadorActual(j);
         boolean activo = true;
         setActivo(activo);
