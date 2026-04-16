@@ -198,6 +198,11 @@ public class Main {
                             Jugador jugBJ = jugadorService.buscarJugador(idbj);
                             BlackJack mesaBJ = casino.agregarBlackJack("BlackJack Clásico", jugBJ, 200.0, 5000.0, true);
                             mesaBJ.iniciar(jugBJ);
+                            System.out.println(
+                                    "Escriba el monto que desea apostar: (mínimo $" + mesaBJ.getApuestaMinima() + ")");
+                            double montoBJ = sc.nextDouble();
+                            sc.nextLine();
+                            mesaBJ.prepararApuesta(montoBJ);
                             mesaBJ.jugar();
                             jugadorService.actualizarJugador();
                         } catch (ApuestaMinimaInvalidaException | SaldoInsuficienteException | IllegalArgumentException
