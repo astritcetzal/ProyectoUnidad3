@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Iterator;
 
 import exceptions.IDJugadorDuplicadoException;
-import persona.Jugador;
+import modelo.Jugador;
 import repositorio.JugadorRepository;
 
 public class JugadorService {

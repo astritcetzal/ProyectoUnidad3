@@ -3,7 +3,7 @@ package interfaces;
 import exceptions.ApuestaInvalidaRuletaException;
 import exceptions.JuegoInactivoRuletaException;
 import exceptions.SaldoInsuficienteException;
-import persona.Jugador;
+import modelo.Jugador;
 
 public interface Jugable {
 

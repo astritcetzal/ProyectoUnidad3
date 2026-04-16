@@ -1,4 +1,4 @@
-package persona;
+package modelo;
 
 import juegos.JuegoMesa;
 

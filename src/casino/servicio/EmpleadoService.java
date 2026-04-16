@@ -1,10 +1,10 @@
 package servicio;
 
 import java.util.List;
-import persona.Empleado;
 import java.io.IOException;
 import repositorio.PersonaRepository;
 import exceptions.CedulaEmpleadoDuplicadoException;
+import modelo.Empleado;
 
 import java.util.ArrayList;
 import java.util.Iterator;

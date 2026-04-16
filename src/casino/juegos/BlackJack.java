@@ -1,6 +1,5 @@
 package juegos;
 
-import persona.Jugador;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -9,6 +8,7 @@ import exceptions.ApuestaMaximaInvalidaException;
 import exceptions.ApuestaMinimaInvalidaException;
 import exceptions.JuegoInactivoException;
 import exceptions.SaldoInsuficienteException;
+import modelo.Jugador;
 
 public class BlackJack extends JuegoMesa {
     private int puntosJugador;
@@ -128,7 +128,7 @@ public class BlackJack extends JuegoMesa {
             System.out.println("  Saldo final     : $" + getJugadorActual().getSaldo());
             System.out.println("══════════════════════════════════════");
         }
-        this.montoApuesta = 0; // Resetear apuesta
+        this.montoApuesta = 0; 
         setActivo(false);
         setJugadorActual(null);
     }

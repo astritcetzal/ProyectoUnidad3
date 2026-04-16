@@ -1,4 +1,4 @@
-package persona;
+package modelo;
 
 
 public class JugadorVIP extends Jugador {

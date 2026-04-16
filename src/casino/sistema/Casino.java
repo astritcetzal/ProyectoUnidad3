@@ -3,7 +3,8 @@ package sistema;
 import juegos.BlackJack;
 import juegos.JuegoMesa;
 import juegos.Ruleta;
-import persona.Jugador;
+import modelo.Jugador;
+
 import java.util.ArrayList;
 import java.util.List;
 

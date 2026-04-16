@@ -4,7 +4,7 @@ import exceptions.ApuestaInvalidaRuletaException;
 import exceptions.ApuestaMaximaInvalidaException;
 import exceptions.ApuestaMinimaInvalidaException;
 import exceptions.JuegoInactivoRuletaException;
-import persona.Jugador;
+import modelo.Jugador;
 
 public class Ruleta extends JuegoMesa {
 

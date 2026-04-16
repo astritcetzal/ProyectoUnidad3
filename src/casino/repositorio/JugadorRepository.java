@@ -3,7 +3,7 @@ package repositorio;
 import java.io.IOException;
 import java.util.List;
 
-import persona.Jugador;
+import modelo.Jugador;
 
 public interface JugadorRepository {
     void guardar(List<Jugador> jugadores) throws IOException;

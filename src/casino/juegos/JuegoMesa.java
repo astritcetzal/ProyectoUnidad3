@@ -6,7 +6,7 @@ import exceptions.ApuestaMinimaInvalidaException;
 import exceptions.JuegoInactivoRuletaException;
 import exceptions.SaldoInsuficienteException;
 import interfaces.Jugable;
-import persona.Jugador;
+import modelo.Jugador;
 
 public abstract class JuegoMesa implements Jugable {
 
