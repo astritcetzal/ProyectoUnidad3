@@ -1,11 +1,8 @@
 package modelo;
 
-import juegos.JuegoMesa;
-
 public class Empleado extends Persona {
     private String cargo;
     private double salario;
-    private JuegoMesa mesaAsignada;
     private String cedula;
 
     public Empleado(String nombre, String apellido, String cedula, int edad, String cargo, double salario) {
@@ -70,15 +67,6 @@ public class Empleado extends Persona {
     }
 
     
-
-    public void supervisarMesa() {
-        if (this.mesaAsignada != null) {
-            System.out.println("El empleado " + this.getNombre() + " (" + this.cargo + ") está supervisando la mesa: "
-                    + this.mesaAsignada.getNombre());
-        } else {
-            System.out.println("El empleado " + this.getNombre() + " actualmente no tienen ninguna mesa asignada");
-        }
-    }
 
 
     @Override
