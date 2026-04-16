@@ -74,4 +74,8 @@ public class JugadorService {
         throw new IllegalArgumentException("No se encontró un jugador con ID: " + id);
     }
 
+    public void actualizarJugador() throws IOException {
+        repositorio.guardar(jugadores);
+    }
+
 }

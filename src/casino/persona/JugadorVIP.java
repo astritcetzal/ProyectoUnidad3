@@ -7,10 +7,10 @@ public class JugadorVIP extends Jugador {
     private double limiteApuestaEspecial;
     private double porcentajeBonus;
 
-    public JugadorVIP(String nombre, String apellido, String cedula, int edad, 
+    public JugadorVIP(String nombre, String apellido, int edad, 
                       double saldo, String idJugador, String nivelVIP, 
                       double limiteApuestaEspecial, double porcentajeBonus) {
-        super(nombre, apellido, cedula, edad, saldo, idJugador);
+        super(nombre, apellido, edad, saldo, idJugador);
         if(nivelVIP == null || nivelVIP.isEmpty()){
             throw new IllegalArgumentException("El nivel VIP no puede ser nulo.");
         }
@@ -72,7 +72,6 @@ public class JugadorVIP extends Jugador {
     public String toString(){
         return "\n Nombre = " + getNombre() +
                "\n Apellido = " + getApellido() +
-               "\n Cédula = " + getCedula() +
                "\n Edad = " + getEdad() +
                "\n Saldo = " + getSaldo() +
                "\n ID del Jugador = " + getIdJugador() +
@@ -84,5 +83,38 @@ public class JugadorVIP extends Jugador {
     @Override
     public String getRol(){
         return "Jugador VIP";
-    } 
+    }
+
+    @Override
+    public String toCSV() {
+        return new StringBuilder()
+            .append(getNombre()).append(",")
+            .append(getApellido()).append(",")
+            .append(getEdad()).append(",")
+            .append(getSaldo()).append(",")
+            .append(getIdJugador()).append(",")
+            .append(getNivelVIP()).append(",")
+            .append(getLimiteApuestaEspecial()).append(",")
+            .append(getPorcentajeBonus())
+            .toString();
+    }
+
+    public static JugadorVIP fromCSV(String linea) {
+        try {
+            String[] p = linea.split(",");
+            if (p.length < 8) throw new IllegalArgumentException("Línea CSV inválida para JugadorVIP: " + linea);
+            return new JugadorVIP(
+                p[0],                               // nombre
+                p[1],                               // apellido
+                Integer.parseInt(p[2].trim()),      // edad
+                Double.parseDouble(p[3].trim()),    // saldo
+                p[4],                               // idJugador
+                p[5],                               // nivelVIP
+                Double.parseDouble(p[6].trim()),    // limiteApuestaEspecial
+                Double.parseDouble(p[7].trim())     // porcentajeBonus
+            );
+        } catch (Exception e) {
+            throw new IllegalArgumentException("Error al parsear JugadorVIP desde CSV: " + e.getMessage());
+        }
+    }
 }
