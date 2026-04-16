@@ -14,10 +14,13 @@ public class BlackJack extends JuegoMesa {
     private int puntosJugador;
     private int puntosCasa;
     private List<Integer> mazo;
+    private double montoApuesta;
 
-    public BlackJack(String nombre, Jugador jugadorActual, double apuestaMinima, double apuestaMaxima, boolean activo) throws ApuestaMaximaInvalidaException, ApuestaMinimaInvalidaException {
+    public BlackJack(String nombre, Jugador jugadorActual, double apuestaMinima, double apuestaMaxima, boolean activo) 
+            throws ApuestaMaximaInvalidaException, ApuestaMinimaInvalidaException {
         super(nombre, jugadorActual, apuestaMinima, apuestaMaxima, activo);
         this.mazo = new ArrayList<>();
+        this.montoApuesta = 0;
         prepararMazo();
     }
 
@@ -32,9 +35,15 @@ public class BlackJack extends JuegoMesa {
     }
 
     private int sacarCarta() {
-        if (mazo.isEmpty())
-            prepararMazo();
+        if (mazo.isEmpty()) prepararMazo();
         return mazo.remove(0);
+    }
+
+    public void prepararApuesta(double monto) {
+        if (monto < getApuestaMinima() || monto > getApuestamaxima()) {
+            throw new IllegalArgumentException("La apuesta de $" + monto + " está fuera de los límites.");
+        }
+        this.montoApuesta = monto;
     }
 
     @Override
@@ -62,37 +71,43 @@ public class BlackJack extends JuegoMesa {
     @Override
     public void jugar() {
         try {
-            if (!isActivo()) throw new JuegoInactivoException(getNombre());
+            if (!isActivo() || getJugadorActual() == null) {
+                throw new JuegoInactivoException(getNombre());
+            }
 
-            double montoSimulado = getApuestaMinima(); 
-            getJugadorActual().apostar(montoSimulado);
+            getJugadorActual().apostar(montoApuesta);
 
             repartirCartas();
             
-            // Lógica automática del jugador (pide hasta 17)
             while (this.puntosJugador < 17) {
                 this.puntosJugador += sacarCarta();
             }
 
-            // Lógica automática de la casa
             if (this.puntosJugador <= 21) {
                 while (this.puntosCasa < 17) {
                     this.puntosCasa += sacarCarta();
                 }
             }
             
-            // Manejo de pagos
             int resultado = calcularPuntos();
-            if (resultado == 1) {
-                getJugadorActual().recibirPago(montoSimulado * 2);
-            } else if (resultado == 0) {
-                getJugadorActual().recibirPago(montoSimulado); // Empate devuelve apuesta
+            
+            System.out.println("Apuesta realizada. Monto apostado: $" + montoApuesta);
+
+            if (resultado == 1) { 
+                double premio = montoApuesta * 2;
+                System.out.println("¡GANASTE! Pago recibido de: $" + premio);
+                getJugadorActual().recibirPago(premio);
+            } else if (resultado == 0) { 
+                System.out.println("EMPATE. Se devuelve tu apuesta de: $" + montoApuesta);
+                getJugadorActual().recibirPago(montoApuesta);
+            } else { 
+                System.out.println("La casa gana. Perdiste $" + montoApuesta);
             }
 
             terminar();
             
         } catch (JuegoInactivoException e) {
-            System.out.println("Error de estado: " + e.getMessage());
+            System.out.println("Error: " + e.getMessage());
         }
     }
     
@@ -113,6 +128,7 @@ public class BlackJack extends JuegoMesa {
             System.out.println("  Saldo final     : $" + getJugadorActual().getSaldo());
             System.out.println("══════════════════════════════════════");
         }
+        this.montoApuesta = 0; // Resetear apuesta
         setActivo(false);
         setJugadorActual(null);
     }
@@ -123,10 +139,14 @@ public class BlackJack extends JuegoMesa {
     }
 
     public int calcularPuntos() {
+        // Si el jugador se pasa de 21, pierde siempre (Gana casa = 2)
         if (puntosJugador > 21) return 2;
+        // Si la casa se pasa o el jugador tiene más puntos, gana jugador (1)
         if (puntosCasa > 21 || puntosJugador > puntosCasa) return 1;
-        if (puntosJugador < puntosCasa) return 2;
-        return 0;
+        // Si tienen lo mismo, empate (0)
+        if (puntosJugador == puntosCasa) return 0;
+        // En cualquier otro caso, gana casa (2)
+        return 2;
     }
 
     public int getPuntosJugador() { return puntosJugador; }
