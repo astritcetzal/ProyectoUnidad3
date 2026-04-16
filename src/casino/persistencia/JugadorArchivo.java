@@ -9,6 +9,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import persona.Jugador;
+import persona.JugadorVIP;
 import repositorio.JugadorRepository;
 
 public class JugadorArchivo implements JugadorRepository {
@@ -21,7 +22,7 @@ public class JugadorArchivo implements JugadorRepository {
     @Override
     public void guardar(List<Jugador> jugadores) throws IOException {
         try (PrintWriter pw = new PrintWriter(new FileWriter(rutaArchivo))) {
-            pw.println("Nombre,Apellido,Cedula,Edad,Saldo,idJugador");
+            pw.println("Nombre,Apellido,Cedula,Edad,Saldo,idJugador,NivelVIP,LimiteApuestaEspecial,PorcentajeBonus");
             for (Jugador j : jugadores) {
                 pw.println(j.toCSV());
             }
@@ -46,7 +47,15 @@ public class JugadorArchivo implements JugadorRepository {
                 }
                 if (!linea.trim().isEmpty()) {
                     try {
-                        jugadores.add(Jugador.fromCSV(linea));
+                        // Detectar si es VIP o normal según la cantidad de columnas
+                        String[] campos = linea.split(",");
+                        if (campos.length >= 9) {
+                            // Es un JugadorVIP (tiene 9 columnas)
+                            jugadores.add(JugadorVIP.fromCSV(linea));
+                        } else {
+                            // Es un Jugador normal (tiene 6 columnas)
+                            jugadores.add(Jugador.fromCSV(linea));
+                        }
                     } catch (IllegalArgumentException e) {
                         System.out.println("Linea ignorada: " + e.getMessage());
                     }

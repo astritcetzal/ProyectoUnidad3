@@ -36,15 +36,15 @@ public class Main {
             int opcion;
             do{
                 System.out.println("\n~~ SISTEMA CASINO: " + casino.getNombre().toUpperCase() + " ~~\n");
-                System.out.println("1.- Registrar Jugador");
-                System.out.println("2.- Registrar Jugador VIP");
-                System.out.println("3.- Registrar Empleado");
-                System.out.println("4.- Buscar jugador");
-                System.out.println("5.- Jugar a la ruleta");
-                System.out.println("6.- Jugar a BlackJack");
-                System.out.println("7.- Ver jugadores VIP"); // filtrado
-                System.out.println("8.- Eliminar empleado"); //Iterator1
-                System.out.println("9.- Salir y guardar");
+                System.out.println("1. Registrar Jugador");
+                System.out.println("2. Registrar Jugador VIP");
+                System.out.println("3. Registrar Empleado");
+                System.out.println("4. Buscar jugador");
+                System.out.println("5. Jugar a la ruleta");
+                System.out.println("6. Jugar a BlackJack");
+                System.out.println("7. Ver jugadores VIP"); // filtrado
+                System.out.println("8. Eliminar empleado"); //Iterator
+                System.out.println("9. Salir y guardar");
                 System.out.print("\nSeleccione una opción: ");
                 opcion = sc.nextInt();
                 sc.nextLine();
@@ -87,7 +87,7 @@ public class Main {
                             System.out.println("ID jugador (ej. JUG-VIP1): "); String idV = sc.nextLine();
                             System.out.println("Saldo con el que inicia: "); double saldoV = sc.nextDouble(); sc.nextLine();
                             
-                            JugadorVIP nuevoVIP = new JugadorVIP(nomV, apeV, cedV, edadV, saldoV, nivelVIP, idV, 1000, 10);
+                            JugadorVIP nuevoVIP = new JugadorVIP(nomV, apeV, cedV, edadV, saldoV, idV, nivelVIP, 1000, 10);
                             jugadorService.agregarJugador(nuevoVIP);
                             System.out.println("El jugador VIP se registró correctamente!");
                             registroexitosovip = true;
@@ -145,7 +145,10 @@ public class Main {
                             System.out.println("Color (Rojo, Negro, Verde): "); String color = sc.nextLine();
                             mesaRuleta.setApuesta(numero, color, montapuesta);
                             mesaRuleta.jugar();
-                        } catch (ApuestaMinimaInvalidaException | ApuestaMaximaInvalidaException e){ System.out.println("Algo está fallando en la partida: " + e.getMessage());}
+                            jugadorService.actualizarJugador();
+                        } catch (ApuestaMinimaInvalidaException | ApuestaMaximaInvalidaException | IOException e){ 
+                            System.out.println("Algo está fallando en la partida: " + e.getMessage());
+                        }
                         break;
                         
 
@@ -158,7 +161,8 @@ public class Main {
                             BlackJack mesaBJ = casino.agregarBlackJack("BlackJack Clásico", jugBJ, 200.0, 5000.0, true);
                             mesaBJ.iniciar(jugBJ);
                             mesaBJ.jugar();
-                        } catch (SaldoInsuficienteException | ApuestaMinimaInvalidaException e) { 
+                            jugadorService.actualizarJugador();
+                        } catch (SaldoInsuficienteException | ApuestaMinimaInvalidaException | IOException e) { 
                             System.out.println("Algo está fallando en la partida: " + e.getMessage());
                         }
                         break;
