@@ -16,6 +16,7 @@ public class Empleado extends Persona {
         if (salario < 0) {
             throw new IllegalArgumentException("El salario no puede ser menor a 0");
         }
+        this.cedula = cedula;
         this.cargo = cargo;
         this.salario = salario;
     }
