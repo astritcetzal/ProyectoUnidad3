@@ -158,7 +158,7 @@ public class Main {
                             mesaBJ.iniciar(jugBJ);
                             mesaBJ.jugar();
                             jugadorService.actualizarJugador();
-                        } catch (SaldoInsuficienteException | ApuestaMinimaInvalidaException | IOException e) { 
+                        } catch ( ApuestaMinimaInvalidaException | SaldoInsuficienteException | IOException e) { 
                             System.out.println("Algo está fallando en la partida: " + e.getMessage());
                         }
                         break;

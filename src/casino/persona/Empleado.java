@@ -69,16 +69,7 @@ public class Empleado extends Persona {
         this.salario = salario;
     }
 
-    public JuegoMesa getMesaAsignada() {
-        return mesaAsignada;
-    }
-
-    public void setMesaAsignada(JuegoMesa mesa) {
-        if (mesa == null) {
-            throw new IllegalArgumentException("Debe asignar mesa");
-        }
-        this.mesaAsignada = mesa;
-    }
+    
 
     public void supervisarMesa() {
         if (this.mesaAsignada != null) {

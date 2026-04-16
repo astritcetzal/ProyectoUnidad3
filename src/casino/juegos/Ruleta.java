@@ -110,9 +110,9 @@ public class Ruleta extends JuegoMesa {
             colorElegido = "";
             terminar();
 
-        } catch (JuegoInactivoRuletaException e) {
-            System.out.println("Error de estado: " + e.getMessage());
         } catch (ApuestaInvalidaRuletaException e) {
+            System.out.println("Error de estado: " + e.getMessage());
+        } catch (JuegoInactivoRuletaException e) {
             System.out.println("Error de apuesta: " + e.getMessage());
         }
     }
