@@ -141,7 +141,9 @@ public class Main {
                             Ruleta mesaRuleta = casino.agregarRuleta("Ruleta Europea", jugaRuleta, 150, 200, true);
                             mesaRuleta.iniciar(jugaRuleta);
                             System.out.println("Escriba el monto que desea apostar: (mínimo $" + mesaRuleta.getApuestaMinima() + ")"); double montapuesta = sc.nextDouble(); sc.nextLine();
-                            mesaRuleta.setApuesta(15, "rojo", montapuesta);
+                            System.out.println("Número en el que desea apostar (0-36): "); int numero = sc.nextInt(); sc.nextLine();
+                            System.out.println("Color (Rojo, Negro, Verde): "); String color = sc.nextLine();
+                            mesaRuleta.setApuesta(numero, color, montapuesta);
                             mesaRuleta.jugar();
                         } catch (ApuestaMinimaInvalidaException | ApuestaMaximaInvalidaException | ApuestaInvalidaRuletaException e){ System.out.println("Algo está fallando en la partida: " + e.getMessage());}
                         break;
