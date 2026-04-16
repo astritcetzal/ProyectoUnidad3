@@ -19,7 +19,7 @@ public class Jugador extends Persona implements Apostable {
         
         this.saldo = saldo;
         this.puntosLealtad = 0;
-        this.idJugador = idJugador;
+        this.idJugador = idJugador.toUpperCase();
     }
 
     public double getSaldo() {

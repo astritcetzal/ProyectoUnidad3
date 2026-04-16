@@ -1,6 +1,4 @@
 Nombre,Apellido,Edad,Saldo,idJugador,NivelVIP,LimiteApuestaEspecial,PorcentajeBonus
-venus,semino,355.0,JUG-005
-venus,hola,9384.0,jdoe
-venus,venven,9138.0,bronce
-Carlos,Llanes,90.0,JUG-009
-Facundo,Albar,9500.0,JUG-VIP90
+Carlos Llanes,Rodriguez,19,160.0,JUG-VIP4,Oro,1000.0,10.0
+Carlos Llanes,Rodriguez,19,120.0,JUG-VIP6,Oro,1000.0,10.0
+Carlos,Alberto,20,543.0,JUG-987

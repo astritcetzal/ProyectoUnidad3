@@ -50,13 +50,10 @@ public class JugadorArchivo implements JugadorRepository {
                 }
                 if (!linea.trim().isEmpty()) {
                     try {
-                        // Detectar si es VIP o normal según la cantidad de columnas
                         String[] campos = linea.split(",");
-                        if (campos.length >= 9) {
-                            // Es un JugadorVIP (tiene 9 columnas)
+                        if (campos.length >= 8) {
                             jugadores.add(JugadorVIP.fromCSV(linea));
                         } else {
-                            // Es un Jugador normal (tiene 6 columnas)
                             jugadores.add(Jugador.fromCSV(linea));
                         }
                     } catch (IllegalArgumentException e) {

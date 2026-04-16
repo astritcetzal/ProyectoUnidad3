@@ -5,7 +5,7 @@ public class ApuestaInvalidaRuletaException extends Exception {
     private double maximoMesa;
 
     public ApuestaInvalidaRuletaException(double minimoMesa, double maximoMesa) {
-        super("Apuesta inválida. El monto debe estar entre" + minimoMesa + " y" + maximoMesa);
+        super("Apuesta inválida. El monto debe estar entre " + minimoMesa + " y " + maximoMesa);
         this.minimoMesa = minimoMesa;
         this.maximoMesa = maximoMesa;
     }
