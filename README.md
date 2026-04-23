@@ -10,7 +10,7 @@
 | Nombre | GitHub |
 |---|---|
 | Astrit Cetzal | [@astritcetzal](https://github.com/astritcetzal) |
-| Carlos Alfonso Llanes | — |
+| Carlos Alfonso Llanes | [@ Carlos-Llanes-Rodriguez](https://github.com/carlosalfonso070717-blip) |
 | Fernando Castro | [@Fernando-Castro-Hernandez](https://github.com/Fernando-Castro-Hernandez) |
 | Mateo Martin | — |
 | Venus Semino | — |
